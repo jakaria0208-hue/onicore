@@ -2,7 +2,6 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="-Fxl9iPYQ1Zsr8ATu89dbOHMEy8FUTNFhK0kR6sO1pk" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Onicore — Media Gaya Hidup Aktif</title>
   <meta name="description" content="Onicore adalah media informasi olahraga, kesehatan, hiking, lifestyle, dan tips & trick untuk anak muda Indonesia.">
@@ -533,9 +532,9 @@
       <!-- Center col (main story) -->
       <div class="np-col">
         <div class="np-col-header" style="text-align:center">Laporan Utama</div>
-        <img class="np-main-img" onclick="openArticle(9)" style="cursor:pointer" src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&auto=format&fit=crop" alt="">
-        <div class="np-main-kicker" onclick="openArticle(9)" style="cursor:pointer">Hiking · Edisi Perdana</div>
-        <div class="np-main-title" onclick="openArticle(9)" style="cursor:pointer">10 Jalur Pendakian Terbaik di Indonesia yang Wajib Lo Taklukkan</div>
+        <img class="np-main-img" onclick="openArticle(0)" style="cursor:pointer" src="https://i.ibb.co/GYsq0ML/Jakarta-it-s-your-time-Keep-training-to-cross-the-finish-line-June-27-28-Nusantara-Inte-1.webp" alt="">
+        <div class="np-main-kicker" onclick="openArticle(0)" style="cursor:pointer">Event · Edisi Perdana</div>
+        <div class="np-main-title" onclick="openArticle(0)" style="cursor:pointer">Hyrox Kini Banyak Diminati di Indonesia — Kamu Sudah Tau Apa Itu Hyrox?</div>
         <div class="np-main-lead">Dari puncak Rinjani di Lombok hingga keajaiban Carstensz di Papua, Indonesia menyimpan surga bagi para pendaki. Redaksi Onicore merangkum sepuluh jalur terbaik yang wajib masuk bucket list lo — lengkap dengan tingkat kesulitan, persiapan, dan waktu terbaik untuk mendaki.</div>
         <div class="np-byline">Oleh: Onicore Team &nbsp;·&nbsp; 17 Mei 2026 &nbsp;·&nbsp; 12 mnt baca</div>
       </div>
@@ -985,6 +984,10 @@
     const catThemeMap = { 'Olahraga':'olahraga','Kesehatan':'kesehatan','Hiking':'hiking','Lifestyle':'lifestyle','Tips & Trick':'tips','Nutrisi':'nutrisi','Event':'event','Review Gear':'gear' };
 
     function generateBody(a) {
+      if (a.body) {
+        const paras = a.body.split('\n\n').map(p => `<p>${p}</p>`).join('');
+        return `<div class="body-text">${paras}</div>`;
+      }
       const tips = {
         'Olahraga': ['Mulai dengan intensitas rendah lalu tingkatkan secara bertahap','Lakukan pemanasan minimal 10 menit sebelum latihan','Istirahat cukup antara sesi latihan agar otot bisa recover','Pantau detak jantung untuk memastikan intensitas latihan tepat','Konsistensi lebih penting dari intensitas di awal'],
         'Kesehatan': ['Tidur 7-8 jam setiap malam untuk recovery optimal','Minum minimal 2 liter air per hari, lebih jika aktif berolahraga','Konsumsi makanan bergizi seimbang dari berbagai kelompok pangan','Kelola stres dengan meditasi, yoga, atau aktivitas yang lo suka','Lakukan pemeriksaan kesehatan rutin minimal setahun sekali'],
@@ -1040,6 +1043,7 @@
 
     // Database artikel
     const articles = [
+      { title:'Hyrox Kini Banyak Diminati di Indonesia — Kamu Sudah Tau Apa Itu Hyrox?', cat:'Event', page:'event', desc:'Hyrox gabungin lari 8 km dengan 8 station latihan fungsional. Semua orang bisa ikut, bukan cuma atlet.', img:'https://i.ibb.co/GYsq0ML/Jakarta-it-s-your-time-Keep-training-to-cross-the-finish-line-June-27-28-Nusantara-Inte-1.webp', time:'4 mnt', body:'Belakangan ini, nama Hyrox makin sering muncul di feed olahraga kita. Tapi sebenernya, apa sih Hyrox itu?\n\nHyrox adalah kompetisi kebugaran yang menggabungkan lari sejauh 8 kilometer dengan 8 station latihan fungsional — mulai dari ski erg, sled push, burpee broad jump, sampai wall balls. Semua dilakukan tanpa jeda, berurutan, sampai finish.\n\nBeda dari maraton yang murni soal kecepatan lari, atau CrossFit yang lebih ke angkat beban berat — Hyrox dirancang buat semua orang. Pemula, atlet, bahkan yang baru mulai olahraga serius pun bisa ikut.\n\nKompetisi ini lahir di Jerman tahun 2017 dan sekarang udah digelar di lebih dari 50 kota di seluruh dunia. Indonesia? Komunitas Hyrox lokal udah mulai tumbuh, dan antusiasmenya luar biasa.\n\nKenapa banyak yang ketagihan? Karena Hyrox kasih sesuatu yang jarang ada di olahraga lain — tantangan yang terukur. Lo bisa lihat progres lo dari waktu ke waktu, bisa bersaing sama diri sendiri, dan ngerasain kepuasan yang nyata waktu crossing the finish line.\n\nKalau lo lagi nyari olahraga baru yang lebih dari sekadar gym biasa — Hyrox worth it buat dicoba.' },
       { title:'Panduan Lengkap Lari 5K untuk Pemula di 2026', cat:'Olahraga', page:'olahraga', desc:'Mulai dari nol sampai bisa finish 5K dalam 8 minggu dengan program latihan yang tepat.', img:'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400&auto=format&fit=crop', time:'7 mnt' },
       { title:'5 Latihan HIIT 20 Menit yang Bakar Lemak Lebih Cepat', cat:'Olahraga', page:'olahraga', desc:'Studi membuktikan HIIT lebih efektif membakar kalori dibanding kardio biasa. Ini programnya.', img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&auto=format&fit=crop', time:'5 mnt' },
       { title:'Program Latihan Full Body 3x Seminggu', cat:'Olahraga', page:'olahraga', desc:'Latihan efisien yang menargetkan semua otot utama hanya dalam 3 sesi per minggu.', img:'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&auto=format&fit=crop', time:'9 mnt' },
