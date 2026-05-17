@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onicore — Media Gaya Hidup Aktif</title>
+  <meta name="description" content="Onicore adalah media informasi olahraga, kesehatan, hiking, lifestyle, dan tips & trick untuk anak muda Indonesia.">
+  <meta property="og:title" content="Onicore — Media Gaya Hidup Aktif" />
+  <meta property="og:description" content="Olahraga, kesehatan, hiking, lifestyle, dan tips & trick untuk anak muda Indonesia." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── BASE ── */
+    :root {
+      --accent: #ffffff;
+      --accent-dim: #333333;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #2a2a2a;
+      --gray: #888888;
+      --gray2: #555555;
+      --white: #ffffff;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:var(--black); color:var(--white); overflow-x:hidden; }
+    a { text-decoration:none; color:inherit; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position:sticky; top:0; z-index:100;
+      background:rgba(10,10,10,0.97);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--dark3);
+      transition: border-color 0.4s;
+    }
+    nav.themed { border-bottom:1px solid var(--accent); }
+    .nav-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; }
+    .logo { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:4px; cursor:pointer; transition: color 0.3s; }
+    .logo .oni { color:var(--accent); text-shadow: 0 0 20px color-mix(in srgb, var(--accent) 40%, transparent); }
+    .logo .core { color:var(--white); }
+    .nav-search { display:flex; align-items:center; background:var(--dark2); border:1px solid var(--dark3); border-radius:8px; padding:8px 16px; gap:8px; width:240px; transition: border-color 0.2s; }
+    .nav-search:focus-within { border-color: var(--accent); }
+    .nav-search input { background:none; border:none; outline:none; color:var(--white); font-size:14px; width:100%; }
+    .nav-search input::placeholder { color:var(--gray); }
+
+    /* Search results */
+    .search-empty { text-align:center; padding: 80px 40px; }
+    .search-empty .search-icon { font-size:48px; margin-bottom:16px; opacity:0.3; }
+    .search-empty h3 { font-size:20px; font-weight:700; margin-bottom:8px; color:var(--gray); }
+    .search-empty p { font-size:14px; color:var(--gray2); }
+    .search-results-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .search-highlight { color: var(--accent); }
+    .nav-cta { background:var(--accent); color:var(--black); font-weight:700; font-size:13px; padding:9px 20px; border-radius:8px; transition:all 0.2s; }
+    .nav-cta:hover { opacity:0.85; transform:translateY(-1px); }
+    .nav-categories { display:flex; padding:0 40px; border-top:1px solid var(--dark3); overflow-x:auto; }
+    .nav-categories::-webkit-scrollbar { display:none; }
+    .nav-cat { padding:12px 20px; font-size:13px; font-weight:500; color:var(--gray); white-space:nowrap; transition:all 0.2s; border-bottom:2px solid transparent; cursor:pointer; }
+    .nav-cat:hover { color:var(--accent); }
+    .nav-cat.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+    /* ── PAGES ── */
+    .page { display:none; }
+    .page.active { display:block; }
+
+    /* ── THEME COLORS ── */
+    body.theme-home    { --accent:#ffffff; --accent-dim:#333; }
+    body.theme-olahraga { --accent:#e74c3c; --accent-dim:#4a1010; }
+    body.theme-kesehatan { --accent:#1abc9c; --accent-dim:#0a3328; }
+    body.theme-hiking  { --accent:#7cb518; --accent-dim:#1e3006; }
+    body.theme-lifestyle { --accent:#9b59b6; --accent-dim:#2d1040; }
+    body.theme-tips    { --accent:#f39c12; --accent-dim:#3d2600; }
+    body.theme-nutrisi { --accent:#e67e22; --accent-dim:#3d1a00; }
+    body.theme-event   { --accent:#2980b9; --accent-dim:#0a2040; }
+    body.theme-gear    { --accent:#95a5a6; --accent-dim:#1a2020; }
+
+    /* ── BADGE ── */
+    .badge { display:inline-block; background:var(--accent); color:var(--black); font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:4px; margin-bottom:10px; }
+
+    /* ══════════════════════════════════
+       HOME — NEWSPAPER STYLE
+    ══════════════════════════════════ */
+    /* Newspaper header */
+    .newspaper-header {
+      border-bottom: 3px double #444;
+      padding: 24px 40px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .newspaper-date {
+      font-size: 11px; letter-spacing: 2px; color: var(--gray);
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .newspaper-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px; font-weight: 900;
+      line-height: 1; letter-spacing: -2px;
+      color: var(--white);
+    }
+    .newspaper-logo span { color: var(--gray); font-weight: 400; }
+    .newspaper-tagline {
+      font-size: 12px; color: var(--gray); letter-spacing: 3px;
+      text-transform: uppercase; margin-top: 8px;
+      border-top: 1px solid #333; border-bottom: 1px solid #333;
+      padding: 6px 0; display: inline-block; width: 100%;
+    }
+    .newspaper-cats {
+      display: flex; justify-content: center; gap: 24px;
+      margin-top: 12px; flex-wrap: wrap;
+    }
+    .newspaper-cats span {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gray2);
+      cursor: pointer; transition: color 0.2s;
+    }
+    .newspaper-cats span:hover { color: var(--white); }
+
+    /* Newspaper ticker */
+    .ticker-home {
+      background: var(--white); color: var(--black);
+      padding: 8px 0; overflow: hidden; white-space: nowrap;
+      border-bottom: 2px solid #333;
+    }
+    .ticker-inner { display:inline-block; animation: ticker 35s linear infinite; }
+    .ticker-inner span { display:inline-block; padding:0 32px; font-size:12px; font-weight:700; letter-spacing:0.5px; }
+    .ticker-inner span::after { content:"◆"; margin-left:32px; opacity:0.3; }
+    @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* Newspaper grid */
+    .newspaper-grid {
+      display: grid;
+      grid-template-columns: 1fr 2px 1.8fr 2px 1fr;
+      gap: 0;
+      padding: 0 40px;
+      border-bottom: 2px solid #333;
+    }
+    .col-divider { background: #333; }
+
+    /* Column left */
+    .np-col { padding: 24px 28px; }
+    .np-col-header {
+      font-family: 'Playfair Display', serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gray);
+      border-bottom: 1px solid #444; padding-bottom: 8px; margin-bottom: 16px;
+    }
+
+    /* Main story */
+    .np-main-img { width:100%; height:340px; object-fit:cover; margin-bottom:16px; filter:none; }
+    .np-main-kicker { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:6px; }
+    .np-main-title {
+      font-family:'Playfair Display',serif;
+      font-size:34px; font-weight:900; line-height:1.1;
+      margin-bottom:12px; letter-spacing:-0.5px;
+    }
+    .np-main-lead { font-size:14px; color:#ccc; line-height:1.8; border-top:2px solid #444; padding-top:12px; }
+    .np-byline { font-size:11px; color:var(--gray); margin-top:12px; letter-spacing:1px; text-transform:uppercase; }
+
+    /* Side stories */
+    .np-side-story { margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid #2a2a2a; }
+    .np-side-story:last-child { border-bottom:none; margin-bottom:0; }
+    .np-side-img { width:100%; height:130px; object-fit:cover; margin-bottom:10px; }
+    .np-side-kicker { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:4px; }
+    .np-side-title { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; line-height:1.3; margin-bottom:6px; }
+    .np-side-lead { font-size:12px; color:var(--gray); line-height:1.6; }
+    .np-byline-small { font-size:10px; color:var(--gray2); margin-top:8px; letter-spacing:0.5px; }
+
+    /* List story */
+    .np-list-story { display:flex; gap:12px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid #2a2a2a; }
+    .np-list-story:last-child { border-bottom:none; }
+    .np-list-img { width:72px; height:60px; object-fit:cover; flex-shrink:0; }
+    .np-list-kicker { font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--gray); margin-bottom:3px; }
+    .np-list-title { font-family:'Playfair Display',serif; font-size:13px; font-weight:700; line-height:1.4; }
+    .np-list-meta { font-size:10px; color:var(--gray2); margin-top:4px; }
+
+    /* Second row */
+    .newspaper-row2 {
+      display:grid; grid-template-columns:1fr 2px 1fr 2px 1fr 2px 1fr;
+      border-bottom:2px solid #333; padding:0 40px;
+    }
+    .np-mini { padding:20px 24px; }
+    .np-mini-img { width:100%; height:120px; object-fit:cover; margin-bottom:10px; }
+    .np-mini-kicker { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:4px; }
+    .np-mini-title { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; line-height:1.3; }
+    .np-mini-lead { font-size:12px; color:var(--gray); line-height:1.5; margin-top:6px; }
+
+    /* Newspaper section title */
+    .np-section-title {
+      font-family:'Playfair Display',serif;
+      font-size:11px; font-weight:700; letter-spacing:3px;
+      text-transform:uppercase; color:var(--gray);
+      text-align:center; border-top:1px solid #333; border-bottom:1px solid #333;
+      padding:10px 40px; background:var(--dark);
+    }
+
+    /* ══════════════════════════════════
+       CATEGORY PAGES — COLORED
+    ══════════════════════════════════ */
+    .page-banner {
+      padding:52px 40px 36px;
+      background:linear-gradient(135deg, var(--accent-dim) 0%, var(--black) 100%);
+      border-bottom:2px solid var(--accent);
+      position:relative; overflow:hidden;
+    }
+    .page-banner::before {
+      content:''; position:absolute; top:-60px; right:-60px;
+      width:300px; height:300px; border-radius:50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 15%, transparent) 0%, transparent 70%);
+    }
+    .page-banner .page-label { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; opacity:0.8; }
+    .page-banner h1 { font-family:'Bebas Neue',sans-serif; font-size:64px; letter-spacing:4px; line-height:1; margin-bottom:12px; }
+    .page-banner h1 span { color:var(--accent); }
+    .page-banner p { color:var(--gray); font-size:15px; max-width:580px; line-height:1.7; }
+
+    /* Ticker colored */
+    .ticker-colored {
+      background:var(--accent); color:var(--black);
+      padding:9px 0; overflow:hidden; white-space:nowrap;
+    }
+
+    /* Section */
+    section { padding:56px 40px; }
+    .section-dark { background:var(--dark); }
+    .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+    .section-title { display:flex; align-items:center; gap:12px; }
+    .section-title h2 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:2px; }
+    .section-title .line { width:40px; height:3px; background:var(--accent); border-radius:2px; }
+    .see-all { font-size:13px; font-weight:600; color:var(--accent); border:1px solid var(--accent); padding:6px 16px; border-radius:6px; transition:all 0.2s; cursor:pointer; }
+    .see-all:hover { background:var(--accent); color:var(--black); }
+
+    /* Cards */
+    .article-card { background:var(--dark); border-radius:12px; overflow:hidden; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; border:1px solid var(--dark3); }
+    .article-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px color-mix(in srgb, var(--accent) 15%, transparent); border-color:var(--accent-dim); }
+    .card-img { position:relative; overflow:hidden; height:180px; }
+    .card-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+    .article-card:hover .card-img img { transform:scale(1.05); }
+    .card-body { padding:16px; }
+    .card-body h3 { font-size:15px; font-weight:700; line-height:1.4; margin-bottom:8px; }
+    .card-body p { font-size:13px; color:var(--gray); line-height:1.5; margin-bottom:12px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .meta { display:flex; align-items:center; gap:12px; font-size:12px; color:var(--gray); flex-wrap:wrap; }
+
+    .featured-horizontal { display:flex; gap:20px; align-items:flex-start; }
+    .featured-main { flex:2; background:var(--dark); border-radius:12px; overflow:hidden; border:1px solid var(--dark3); cursor:pointer; transition:transform 0.2s; }
+    .featured-main:hover { transform:translateY(-4px); }
+    .featured-main .card-img { height:260px; }
+    .featured-list { flex:1; display:flex; flex-direction:column; gap:16px; }
+    .list-card { display:flex; gap:12px; background:var(--dark); border-radius:10px; border:1px solid var(--dark3); cursor:pointer; transition:all 0.2s; padding:12px; align-items:center; }
+    .list-card:hover { border-color:var(--accent-dim); background:var(--dark2); }
+    .list-card-img { width:80px; height:70px; border-radius:8px; overflow:hidden; flex-shrink:0; }
+    .list-card-img img { width:100%; height:100%; object-fit:cover; }
+    .list-card-body h4 { font-size:13px; font-weight:700; line-height:1.4; margin-bottom:6px; }
+
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+    .tips-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .tip-card { background:var(--dark2); border-radius:12px; padding:24px; border:1px solid var(--dark3); transition:all 0.2s; cursor:pointer; }
+    .tip-card:hover { border-color:var(--accent); transform:translateY(-4px); box-shadow:0 8px 30px color-mix(in srgb, var(--accent) 15%, transparent); }
+    .tip-icon { font-size:32px; margin-bottom:16px; }
+    .tip-card h3 { font-size:16px; font-weight:700; margin-bottom:8px; }
+    .tip-card p { font-size:13px; color:var(--gray); line-height:1.6; }
+
+    .event-card { background:var(--dark); border:1px solid var(--dark3); border-radius:12px; overflow:hidden; cursor:pointer; transition:all 0.2s; }
+    .event-card:hover { transform:translateY(-4px); border-color:var(--accent-dim); }
+    .event-img { height:200px; overflow:hidden; }
+    .event-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+    .event-card:hover .event-img img { transform:scale(1.05); }
+    .event-body { padding:20px; }
+    .event-date { display:flex; align-items:center; gap:16px; margin-bottom:12px; }
+    .date-box { background:var(--accent); color:var(--black); border-radius:8px; padding:8px 12px; text-align:center; min-width:52px; }
+    .date-box .day { font-family:'Bebas Neue',sans-serif; font-size:28px; line-height:1; }
+    .date-box .month { font-size:10px; font-weight:700; letter-spacing:1px; }
+    .event-body h3 { font-size:16px; font-weight:700; margin-bottom:8px; line-height:1.4; }
+    .event-body p { font-size:13px; color:var(--gray); line-height:1.5; margin-bottom:14px; }
+    .event-info { display:flex; gap:16px; font-size:12px; color:var(--gray); }
+
+    .gear-card { background:var(--dark); border:1px solid var(--dark3); border-radius:12px; overflow:hidden; cursor:pointer; transition:all 0.2s; }
+    .gear-card:hover { transform:translateY(-4px); border-color:var(--accent-dim); }
+    .gear-img { height:200px; overflow:hidden; position:relative; }
+    .gear-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+    .gear-card:hover .gear-img img { transform:scale(1.05); }
+    .gear-rating { position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.85); border:1px solid var(--accent); border-radius:6px; padding:4px 10px; font-size:13px; font-weight:700; color:var(--accent); }
+    .gear-body { padding:16px; }
+    .gear-body h3 { font-size:15px; font-weight:700; margin-bottom:6px; }
+    .gear-body .price { font-size:18px; font-weight:800; color:var(--accent); margin-bottom:8px; }
+    .gear-body p { font-size:13px; color:var(--gray); line-height:1.5; }
+    .stars { color:#ffd700; font-size:13px; margin-bottom:8px; }
+
+    /* Newsletter */
+    .newsletter { background:linear-gradient(135deg, var(--accent-dim) 0%, var(--dark2) 100%); border-top:1px solid var(--accent-dim); border-bottom:1px solid var(--accent-dim); text-align:center; padding:60px 40px; }
+    .newsletter h2 { font-family:'Bebas Neue',sans-serif; font-size:40px; letter-spacing:2px; margin-bottom:12px; }
+    .newsletter h2 span { color:var(--accent); }
+    .newsletter p { color:var(--gray); margin-bottom:28px; font-size:15px; }
+    .newsletter-form { display:flex; gap:12px; max-width:460px; margin:0 auto; }
+    .newsletter-form input { flex:1; background:var(--dark2); border:1px solid var(--dark3); border-radius:8px; padding:12px 16px; color:var(--white); font-size:14px; outline:none; transition:border-color 0.2s; }
+    .newsletter-form input:focus { border-color:var(--accent); }
+    .newsletter-form button { background:var(--accent); color:var(--black); font-weight:700; font-size:14px; padding:12px 24px; border:none; border-radius:8px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+    .newsletter-form button:hover { opacity:0.85; }
+
+    /* Footer */
+    footer { background:var(--dark); border-top:1px solid var(--dark3); padding:48px 40px 24px; }
+    .footer-top { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+    .footer-brand p { font-size:13px; color:var(--gray); line-height:1.7; margin:12px 0 20px; }
+    .footer-logo { font-family:'Playfair Display',serif; font-size:28px; font-weight:900; color:var(--white); cursor:pointer; }
+    .socials { display:flex; gap:10px; }
+    .social-btn { width:36px; height:36px; border-radius:8px; background:var(--dark2); border:1px solid var(--dark3); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; transition:all 0.2s; cursor:pointer; }
+    .social-btn:hover { background:var(--accent); border-color:var(--accent); color:var(--black); }
+    .footer-col h4 { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray2); margin-bottom:16px; border-bottom:1px solid #2a2a2a; padding-bottom:8px; }
+    .footer-col ul { list-style:none; }
+    .footer-col ul li { margin-bottom:10px; }
+    .footer-col ul li a { font-size:13px; color:var(--gray); transition:color 0.2s; cursor:pointer; }
+    .footer-col ul li a:hover { color:var(--white); }
+    .footer-bottom { border-top:1px solid #2a2a2a; padding-top:24px; display:flex; align-items:center; justify-content:space-between; }
+    .footer-bottom p { font-size:12px; color:var(--gray2); }
+    .footer-bottom span { color:var(--accent); }
+
+    /* ── HAMBURGER & MOBILE NAV ── */
+    .hamburger-btn { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+    .hamburger-btn span { display:block; width:22px; height:2px; background:var(--white); border-radius:2px; }
+    .mobile-nav-overlay { display:none; position:fixed; inset:0; z-index:200; background:var(--black); flex-direction:column; padding:24px 20px; overflow-y:auto; }
+    .mobile-nav-overlay.open { display:flex; }
+    .mob-nav-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; }
+    .mob-nav-head .logo { font-size:28px; }
+    .mob-close { background:none; border:none; color:var(--white); font-size:28px; cursor:pointer; line-height:1; }
+    .mob-nav-links { display:flex; flex-direction:column; gap:0; margin-bottom:28px; }
+    .mob-nav-links a { display:block; font-size:17px; font-weight:600; padding:14px 0; border-bottom:1px solid var(--dark3); cursor:pointer; color:var(--white); transition:color 0.2s; }
+    .mob-nav-links a:hover { color:var(--accent); }
+    .mob-search { display:flex; gap:8px; }
+    .mob-search input { flex:1; background:var(--dark2); border:1px solid var(--dark3); border-radius:8px; padding:12px 14px; color:var(--white); font-size:14px; outline:none; }
+    .mob-search input:focus { border-color:var(--accent); }
+    .mob-search button { background:var(--accent); color:var(--black); font-weight:700; border:none; border-radius:8px; padding:12px 18px; cursor:pointer; font-size:14px; }
+
+    /* ── ARTICLE DETAIL PAGE ── */
+    .art-nav-bar { padding:14px 40px; border-bottom:1px solid var(--dark3); display:flex; align-items:center; gap:16px; background:var(--dark); }
+    .back-btn { background:none; border:1px solid var(--dark3); color:var(--white); padding:7px 14px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:600; transition:all 0.2s; font-family:'Inter',sans-serif; }
+    .back-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .art-breadcrumb { font-size:12px; color:var(--gray); }
+    .art-hero-wrap { position:relative; height:480px; overflow:hidden; }
+    .art-hero-wrap img { width:100%; height:100%; object-fit:cover; }
+    .art-hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 55%, transparent 100%); }
+    .art-hero-content { position:absolute; bottom:0; left:0; right:0; padding:40px; max-width:860px; }
+    .art-hero-content h1 { font-family:'Playfair Display',serif; font-size:40px; font-weight:900; line-height:1.2; margin:12px 0 16px; }
+    .art-meta-bar { display:flex; gap:20px; font-size:13px; color:#aaa; flex-wrap:wrap; }
+    .art-body-wrap { max-width:760px; margin:0 auto; padding:48px 24px 64px; }
+    .art-body p { font-size:16px; line-height:1.9; color:#ddd; margin-bottom:22px; }
+    .art-body h2 { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; margin:36px 0 14px; color:var(--white); }
+    .art-body h3 { font-size:18px; font-weight:700; margin:24px 0 10px; color:var(--white); }
+    .art-body ul { margin:0 0 22px 20px; }
+    .art-body ul li { font-size:15px; line-height:1.8; color:#ccc; margin-bottom:6px; }
+    .art-tips-box { background:var(--dark2); border-left:4px solid var(--accent); border-radius:0 12px 12px 0; padding:22px 26px; margin:28px 0; }
+    .art-tips-box h4 { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+    .art-tips-box ul { margin:0 0 0 16px; }
+    .art-tips-box ul li { font-size:14px; color:#ccc; line-height:1.7; margin-bottom:5px; }
+    .art-related { margin-top:56px; border-top:2px solid var(--dark3); padding-top:36px; }
+    .art-related h3 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; margin-bottom:22px; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px) {
+      .newspaper-grid { grid-template-columns:1fr; }
+      .col-divider { display:none; }
+      .newspaper-row2 { grid-template-columns:1fr 1fr; }
+      .grid-4, .tips-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-top { grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:768px) {
+      .hamburger-btn { display:flex; }
+      .nav-search, .nav-cta, .nav-categories { display:none; }
+      .nav-top { padding:12px 16px; }
+      .newspaper-header { padding:16px 16px; }
+      .newspaper-logo { font-size:40px; }
+      .newspaper-tagline { font-size:10px; letter-spacing:1px; }
+      .newspaper-grid { padding:0 16px; grid-template-columns:1fr; }
+      .np-col { padding:20px 0; }
+      .newspaper-row2 { padding:0 16px; grid-template-columns:1fr 1fr; }
+      .np-main-title { font-size:24px; }
+      .np-main-img { height:220px; }
+      section { padding:32px 16px; }
+      .grid-3, .grid-2 { grid-template-columns:1fr; }
+      .grid-4, .tips-grid { grid-template-columns:1fr 1fr; }
+      .featured-horizontal { flex-direction:column; }
+      .footer-top { grid-template-columns:1fr; }
+      .newsletter-form { flex-direction:column; }
+      .page-banner { padding:32px 16px 20px; }
+      .page-banner h1 { font-size:38px; }
+      .page-banner::before { display:none; }
+      .art-hero-wrap { height:280px; }
+      .art-hero-content { padding:20px 16px; }
+      .art-hero-content h1 { font-size:22px; }
+      .art-nav-bar { padding:12px 16px; }
+      .art-body-wrap { padding:28px 16px 48px; }
+      .art-body p { font-size:15px; }
+      .art-body h2 { font-size:22px; }
+      .art-related .grid-3 { grid-template-columns:1fr; }
+      .list-card { flex-direction:column; }
+      .list-card-img { width:100%; height:140px; border-radius:8px; }
+    }
+    @media(max-width:480px) {
+      .newspaper-row2 { grid-template-columns:1fr; }
+      .grid-4, .tips-grid { grid-template-columns:1fr; }
+      .newspaper-logo { font-size:32px; }
+    }
+  </style>
+</head>
+<body class="theme-home">
+
+  <!-- NAVBAR -->
+  <nav id="main-nav">
+    <div class="nav-top">
+      <div class="logo" onclick="showPage('home')">
+        <span class="oni">ONI</span><span class="core">CORE</span>
+      </div>
+      <div class="nav-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Cari artikel..." onkeydown="if(event.key==='Enter') doSearch()">
+      </div>
+      <a href="#" class="nav-cta">Ikuti Kami</a>
+    </div>
+    <div class="nav-categories">
+      <div class="nav-cat active" onclick="showPage('home')">Semua</div>
+      <div class="nav-cat" onclick="showPage('olahraga')">Olahraga</div>
+      <div class="nav-cat" onclick="showPage('kesehatan')">Kesehatan</div>
+      <div class="nav-cat" onclick="showPage('hiking')">Hiking</div>
+      <div class="nav-cat" onclick="showPage('lifestyle')">Lifestyle</div>
+      <div class="nav-cat" onclick="showPage('tips')">Tips & Trick</div>
+      <div class="nav-cat" onclick="showPage('nutrisi')">Nutrisi</div>
+      <div class="nav-cat" onclick="showPage('event')">Event</div>
+      <div class="nav-cat" onclick="showPage('gear')">Review Gear</div>
+    </div>
+  </nav>
+
+  <!-- ══════════════ ARTICLE DETAIL ══════════════ -->
+  <div id="page-article" class="page">
+    <div class="art-nav-bar">
+      <button class="back-btn" onclick="showPage(window._prevPage||'home')">← Kembali</button>
+      <span class="art-breadcrumb" id="art-breadcrumb"></span>
+    </div>
+    <div class="art-hero-wrap">
+      <img id="art-hero-img" src="" alt="">
+      <div class="art-hero-overlay"></div>
+      <div class="art-hero-content">
+        <span id="art-badge" class="badge"></span>
+        <h1 id="art-title"></h1>
+        <div class="art-meta-bar">
+          <span>✍ Onicore Team</span>
+          <span id="art-time"></span>
+        </div>
+      </div>
+    </div>
+    <div class="art-body-wrap">
+      <div class="art-body" id="art-body"></div>
+      <div class="art-related">
+        <h3>Artikel Terkait</h3>
+        <div class="grid-3" id="art-related"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SEARCH RESULTS ══════════════ -->
+  <div id="page-search" class="page">
+    <div class="page-banner">
+      <div class="page-label">Hasil Pencarian</div>
+      <h1>Cari <span id="search-title-query"></span></h1>
+      <p id="search-subtitle">Menampilkan hasil pencarian...</p>
+    </div>
+    <section>
+      <div id="search-results-container"></div>
+    </section>
+  </div>
+
+  <!-- ══════════════ HOME — NEWSPAPER ══════════════ -->
+  <div id="page-home" class="page active">
+
+    <!-- Newspaper Header -->
+    <div class="newspaper-header">
+      <div class="newspaper-date">Minggu, 17 Mei 2026 &nbsp;·&nbsp; Vol. I, No. 1 &nbsp;·&nbsp; Jakarta, Indonesia</div>
+      <div class="newspaper-logo">ONI<span>CORE</span></div>
+      <div class="newspaper-tagline">Media Gaya Hidup Aktif &nbsp;·&nbsp; Olahraga · Kesehatan · Hiking · Lifestyle · Tips</div>
+      <div class="newspaper-cats">
+        <span onclick="showPage('olahraga')">Olahraga</span>
+        <span onclick="showPage('kesehatan')">Kesehatan</span>
+        <span onclick="showPage('hiking')">Hiking</span>
+        <span onclick="showPage('lifestyle')">Lifestyle</span>
+        <span onclick="showPage('tips')">Tips & Trick</span>
+        <span onclick="showPage('nutrisi')">Nutrisi</span>
+        <span onclick="showPage('event')">Event</span>
+        <span onclick="showPage('gear')">Review Gear</span>
+      </div>
+    </div>
+
+    <!-- Ticker -->
+    <div class="ticker-home">
+      <div class="ticker-inner">
+        <span>BREAKING: Onicore Resmi Hadir sebagai Media Gaya Hidup Aktif Indonesia</span>
+        <span>Tips Hiking Pemula: 10 Hal Wajib Dibawa Sebelum Mendaki</span>
+        <span>Review Sepatu Lari Terbaru 2026: Nike vs Adidas vs New Balance</span>
+        <span>Cara Meningkatkan Stamina Lari dalam 30 Hari</span>
+        <span>5 Spot Camping Terbaik di Jawa yang Wajib Dikunjungi</span>
+        <span>BREAKING: Onicore Resmi Hadir sebagai Media Gaya Hidup Aktif Indonesia</span>
+        <span>Tips Hiking Pemula: 10 Hal Wajib Dibawa Sebelum Mendaki</span>
+        <span>Review Sepatu Lari Terbaru 2026: Nike vs Adidas vs New Balance</span>
+        <span>Cara Meningkatkan Stamina Lari dalam 30 Hari</span>
+        <span>5 Spot Camping Terbaik di Jawa yang Wajib Dikunjungi</span>
+      </div>
+    </div>
+
+    <!-- Row 1: 3 column newspaper -->
+    <div class="newspaper-grid">
+      <!-- Left col -->
+      <div class="np-col">
+        <div class="np-col-header">Hiking & Outdoor</div>
+        <div class="np-side-story" onclick="openArticle(9)" style="cursor:pointer">
+          <img class="np-side-img" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&auto=format&fit=crop" alt="">
+          <div class="np-side-kicker">Destinasi</div>
+          <div class="np-side-title">5 Gunung Ramah Pemula di Indonesia yang Wajib Dicoba Tahun Ini</div>
+          <div class="np-side-lead">Mulai pendakian pertama lo di gunung-gunung ini — jalur aman, pemandangan spektakuler, dan nggak perlu pengalaman sebelumnya.</div>
+          <div class="np-byline-small">Oleh: Onicore Team &nbsp;·&nbsp; 8 mnt baca</div>
+        </div>
+        <div class="np-list-story" onclick="openArticle(12)" style="cursor:pointer">
+          <img class="np-list-img" src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=200&auto=format&fit=crop" alt="">
+          <div><div class="np-list-kicker">Camping</div><div class="np-list-title">Tips Camping Aman saat Musim Hujan</div><div class="np-list-meta">5 mnt baca</div></div>
+        </div>
+        <div class="np-list-story" onclick="openArticle(13)" style="cursor:pointer">
+          <img class="np-list-img" src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=200&auto=format&fit=crop" alt="">
+          <div><div class="np-list-kicker">Survival</div><div class="np-list-title">Cara Baca Peta & Kompas saat Tersesat</div><div class="np-list-meta">7 mnt baca</div></div>
+        </div>
+      </div>
+
+      <div class="col-divider"></div>
+
+      <!-- Center col (main story) -->
+      <div class="np-col">
+        <div class="np-col-header" style="text-align:center">Laporan Utama</div>
+        <img class="np-main-img" onclick="openArticle(9)" style="cursor:pointer" src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&auto=format&fit=crop" alt="">
+        <div class="np-main-kicker" onclick="openArticle(9)" style="cursor:pointer">Hiking · Edisi Perdana</div>
+        <div class="np-main-title" onclick="openArticle(9)" style="cursor:pointer">10 Jalur Pendakian Terbaik di Indonesia yang Wajib Lo Taklukkan</div>
+        <div class="np-main-lead">Dari puncak Rinjani di Lombok hingga keajaiban Carstensz di Papua, Indonesia menyimpan surga bagi para pendaki. Redaksi Onicore merangkum sepuluh jalur terbaik yang wajib masuk bucket list lo — lengkap dengan tingkat kesulitan, persiapan, dan waktu terbaik untuk mendaki.</div>
+        <div class="np-byline">Oleh: Onicore Team &nbsp;·&nbsp; 17 Mei 2026 &nbsp;·&nbsp; 12 mnt baca</div>
+      </div>
+
+      <div class="col-divider"></div>
+
+      <!-- Right col -->
+      <div class="np-col">
+        <div class="np-col-header">Olahraga & Kesehatan</div>
+        <div class="np-side-story" onclick="openArticle(1)" style="cursor:pointer">
+          <img class="np-side-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&auto=format&fit=crop" alt="">
+          <div class="np-side-kicker">Kebugaran</div>
+          <div class="np-side-title">HIIT 20 Menit: Latihan Singkat yang Terbukti Bakar Lemak Lebih Efektif</div>
+          <div class="np-side-lead">Studi terbaru membuktikan HIIT selama 20 menit lebih efektif membakar kalori dibanding kardio biasa 45 menit. Ini programnya.</div>
+          <div class="np-byline-small">Oleh: Onicore Team &nbsp;·&nbsp; 5 mnt baca</div>
+        </div>
+        <div class="np-list-story" onclick="openArticle(20)" style="cursor:pointer">
+          <img class="np-list-img" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&auto=format&fit=crop" alt="">
+          <div><div class="np-list-kicker">Nutrisi</div><div class="np-list-title">Menu Sehat Seminggu untuk Atlet Pemula</div><div class="np-list-meta">6 mnt baca</div></div>
+        </div>
+        <div class="np-list-story" onclick="openArticle(5)" style="cursor:pointer">
+          <img class="np-list-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&auto=format&fit=crop" alt="">
+          <div><div class="np-list-kicker">Kesehatan</div><div class="np-list-title">Yoga Pagi 15 Menit: Mulai Hari dengan Energi</div><div class="np-list-meta">4 mnt baca</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section divider -->
+    <div class="np-section-title">Artikel Pilihan Editor — Minggu Ini</div>
+
+    <!-- Row 2: 4 mini columns -->
+    <div class="newspaper-row2">
+      <div class="np-mini" onclick="openArticle(0)" style="cursor:pointer">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Olahraga</div>
+        <div class="np-mini-title">Panduan Lengkap Lari 5K untuk Pemula di 2026</div>
+        <div class="np-mini-lead">Program 8 minggu dari nol hingga finish 5K — aman, efektif, dan bisa dilakukan siapa saja.</div>
+      </div>
+      <div class="col-divider"></div>
+      <div class="np-mini" onclick="openArticle(20)" style="cursor:pointer">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Nutrisi</div>
+        <div class="np-mini-title">Meal Prep Mingguan ala Atlet: Hemat, Sehat, Praktis</div>
+        <div class="np-mini-lead">Siapkan makan sehat satu minggu hanya dalam dua jam — tinggi protein dan tetap lezat.</div>
+      </div>
+      <div class="col-divider"></div>
+      <div class="np-mini" onclick="openArticle(15)" style="cursor:pointer">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Lifestyle</div>
+        <div class="np-mini-title">Morning Routine Atlet Pro yang Bisa Lo Tiru Sekarang</div>
+        <div class="np-mini-lead">Kebiasaan pagi kelas dunia yang bisa langsung dipraktikkan untuk performa maksimal.</div>
+      </div>
+      <div class="col-divider"></div>
+      <div class="np-mini" onclick="openArticle(14)" style="cursor:pointer">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Lifestyle</div>
+        <div class="np-mini-title">Digital Detox + Olahraga: Reset Mental Terbaik</div>
+        <div class="np-mini-lead">Program 7 hari jauh dari layar yang terbukti meningkatkan kebahagiaan dan fokus.</div>
+      </div>
+    </div>
+
+    <div class="np-section-title">Event & Kompetisi Terdekat</div>
+
+    <!-- Row 3: event mini -->
+    <div class="newspaper-row2" style="border-bottom:none; padding-bottom:24px;">
+      <div class="np-mini" onclick="openArticle(23)" style="cursor:pointer">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1542621334-a254cf47733d?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Event · 22 Jun 2026 · Jakarta</div>
+        <div class="np-mini-title">Jakarta Run Fest 2026 — 5K, 10K & 21K</div>
+        <div class="np-mini-lead">Event lari bergengsi terbuka untuk semua kalangan. Rp 150.000.</div>
+      </div>
+      <div class="col-divider"></div>
+      <div class="np-mini" onclick="openArticle(24)" style="cursor:pointer">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Hiking · 5 Jul 2026 · Bandung</div>
+        <div class="np-mini-title">Onicore Community Hike — Gunung Papandayan</div>
+        <div class="np-mini-lead">Hiking bareng komunitas Onicore, open untuk pemula. Rp 250.000.</div>
+      </div>
+      <div class="col-divider"></div>
+      <div class="np-mini" onclick="openArticle(25)" style="cursor:pointer">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1587502537745-84b86da1204f?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Review Gear · Terbaru</div>
+        <div class="np-mini-title">Nike Pegasus 41: Sepatu Lari Terbaik 2026?</div>
+        <div class="np-mini-lead">Rating 9.2/10. Cushioning premium, ringan, dan awet. Worth it?</div>
+      </div>
+      <div class="col-divider"></div>
+      <div class="np-mini">
+        <img class="np-mini-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop" alt="">
+        <div class="np-mini-kicker">Review Gear · Terbaru</div>
+        <div class="np-mini-title">Garmin Forerunner 165: Teman Lari Sempurna</div>
+        <div class="np-mini-lead">GPS akurat, baterai 11 hari, monitor jantung real-time. Rp 3.200.000.</div>
+      </div>
+    </div>
+
+
+    <!-- Newsletter home (monochrome) -->
+    <div style="background:var(--dark); border-top:3px double #444; border-bottom:3px double #444; padding:48px 40px; text-align:center;">
+      <div style="font-family:'Playfair Display',serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--gray); margin-bottom:12px;">Berlangganan Newsletter</div>
+      <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:900; margin-bottom:12px;">Jangan Ketinggalan Satu Artikel pun</div>
+      <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">Konten olahraga, hiking, dan gaya hidup aktif terbaik langsung ke inbox lo. Gratis.</p>
+      <div class="newsletter-form" style="--accent:#fff; --accent-dim:#333;">
+        <input type="email" placeholder="Email lo...">
+        <button style="background:#fff; color:#000;">Subscribe</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ OLAHRAGA — MERAH ══════════════ -->
+  <div id="page-olahraga" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Olah</span>raga</h1>
+      <p>Energi, kekuatan, dan kompetisi. Semua berita, tips, dan program latihan untuk jiwa yang nggak mau berhenti bergerak.</p>
+    </div>
+    <div class="ticker-colored">
+      <div class="ticker-inner">
+        <span>Olahraga adalah bahasa universal semangat</span><span>Panduan Lari 5K untuk Pemula</span><span>HIIT 20 Menit vs Kardio 45 Menit</span><span>Program Full Body 3x Seminggu</span><span>Olahraga adalah bahasa universal semangat</span><span>Panduan Lari 5K untuk Pemula</span><span>HIIT 20 Menit vs Kardio 45 Menit</span><span>Program Full Body 3x Seminggu</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Artikel Pilihan</h2></div></div>
+      <div class="featured-horizontal">
+        <div class="featured-main">
+          <div class="card-img" style="height:280px"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=700&auto=format&fit=crop" alt=""></div>
+          <div class="card-body"><span class="badge">Olahraga</span><h3 style="font-size:22px;margin-bottom:10px">Panduan Lengkap Lari 5K untuk Pemula di 2026</h3><p style="font-size:14px">Mulai dari nol sampai bisa finish 5K dalam 8 minggu. Program latihan progresif yang aman dan efektif buat pemula yang baru mulai aktif bergerak.</p><div class="meta" style="margin-top:12px"><span>✍ Onicore Team</span><span>⏱ 7 mnt baca</span></div></div>
+        </div>
+        <div class="featured-list">
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Olahraga</span><h4>5 Latihan HIIT 20 Menit yang Bakar Lemak Lebih Cepat</h4><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Olahraga</span><h4>Push-Up 100 Hari: Transformasi Tubuh yang Nyata</h4><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Olahraga</span><h4>Gym vs Calisthenics: Pilihan Tepat untuk Pemula</h4><div class="meta"><span>⏱ 8 mnt</span></div></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Semua Artikel</h2></div></div>
+      <div class="grid-4">
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Olahraga</span><h3>Program Latihan Full Body 3x Seminggu</h3><p>Latihan efisien yang menargetkan semua otot utama hanya dalam 3 sesi per minggu.</p><div class="meta"><span>⏱ 9 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1521804906057-1df8fdb718b7?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Olahraga</span><h3>Cara Pemanasan yang Benar Sebelum Olahraga</h3><p>Skip pemanasan = risiko cedera meningkat drastis. Ini urutan yang benar dan kenapa penting.</p><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Olahraga</span><h3>Olahraga di Rumah Tanpa Alat: 30 Menit Cukup</h3><p>Latihan bodyweight ini bisa bikin tubuh lo kencang tanpa butuh gym mahal sama sekali.</p><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Olahraga</span><h3>Sepeda vs Lari: Mana Lebih Bagus untuk Kardio?</h3><p>Perbandingan lengkap dua olahraga kardio favorit dari sisi kalori, sendi, dan efektivitas.</p><div class="meta"><span>⏱ 7 mnt</span></div></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>UPDATE <span>OLAHRAGA</span> TERBARU</h2><p>Tips dan program latihan terbaru langsung ke inbox lo setiap minggu.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Subscribe</button></div></div>
+  </div>
+
+  <!-- ══════════════ KESEHATAN — TEAL ══════════════ -->
+  <div id="page-kesehatan" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Kese</span>hatan</h1>
+      <p>Tubuh sehat adalah fondasi segalanya. Info kesehatan terpercaya, tips hidup fit, dan panduan untuk generasi aktif Indonesia.</p>
+    </div>
+    <div class="ticker-colored">
+      <div class="ticker-inner">
+        <span>Kesehatan adalah investasi terbaik yang bisa lo lakukan</span><span>Yoga Pagi 15 Menit</span><span>Tidur 8 Jam atau Rugi</span><span>Overtraining: Kenali Tandanya</span><span>Kesehatan adalah investasi terbaik yang bisa lo lakukan</span><span>Yoga Pagi 15 Menit</span><span>Tidur 8 Jam atau Rugi</span><span>Overtraining: Kenali Tandanya</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Artikel Utama</h2></div></div>
+      <div class="featured-horizontal">
+        <div class="featured-main">
+          <div class="card-img" style="height:280px"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=700&auto=format&fit=crop" alt=""></div>
+          <div class="card-body"><span class="badge">Kesehatan</span><h3 style="font-size:22px;margin-bottom:10px">Yoga Pagi 15 Menit: Mulai Hari dengan Energi Penuh</h3><p style="font-size:14px">Gerakan yoga simpel yang bisa lo lakuin sebelum sarapan. Terbukti meningkatkan fokus, fleksibilitas, dan mood sepanjang hari tanpa perlu ke studio.</p><div class="meta" style="margin-top:12px"><span>✍ Onicore Team</span><span>⏱ 4 mnt baca</span></div></div>
+        </div>
+        <div class="featured-list">
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Kesehatan</span><h4>Tanda-tanda Tubuh Lo Butuh Istirahat dari Latihan</h4><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Kesehatan</span><h4>Bahaya Kurang Tidur bagi Performa Olahraga</h4><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Kesehatan</span><h4>Cara Menjaga Imunitas Tubuh di Musim Hujan</h4><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Tips Kesehatan</h2></div></div>
+      <div class="tips-grid">
+        <div class="tip-card"><div class="tip-icon">😴</div><h3>Tidur 7-8 Jam: Kenapa Nggak Bisa Ditawar</h3><p>Kurang tidur merusak hormon pertumbuhan, imunitas, dan recovery otot lo secara drastis.</p><div class="meta" style="margin-top:14px"><span>⏱ 5 mnt</span></div></div>
+        <div class="tip-card"><div class="tip-icon">💧</div><h3>Panduan Hidrasi Harian untuk Tubuh Optimal</h3><p>Berapa banyak air yang sebenarnya lo butuhkan setiap hari berdasarkan berat badan dan aktivitas.</p><div class="meta" style="margin-top:14px"><span>⏱ 4 mnt</span></div></div>
+        <div class="tip-card"><div class="tip-icon">🧘</div><h3>Manfaat Meditasi 10 Menit Sehari untuk Atlet</h3><p>Mental yang kuat sama pentingnya dengan fisik. Meditasi terbukti meningkatkan fokus dan performa.</p><div class="meta" style="margin-top:14px"><span>⏱ 4 mnt</span></div></div>
+        <div class="tip-card"><div class="tip-icon">🩺</div><h3>Kapan Harus Periksa ke Dokter Olahraga?</h3><p>Bedain cedera ringan vs serius sebelum terlambat dan kondisi makin parah jika ditangani sendiri.</p><div class="meta" style="margin-top:14px"><span>⏱ 6 mnt</span></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>HIDUP LEBIH <span>SEHAT</span> MULAI HARI INI</h2><p>Tips kesehatan praktis dari para ahli langsung ke inbox lo setiap minggu.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Subscribe</button></div></div>
+  </div>
+
+  <!-- ══════════════ HIKING — HIJAU ALAM ══════════════ -->
+  <div id="page-hiking" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Hiking</span> & Outdoor</h1>
+      <p>Alam adalah guru terbaik. Panduan pendakian, review jalur, tips survival, dan semua yang lo butuhkan untuk menaklukkan Indonesia.</p>
+    </div>
+    <div class="ticker-colored">
+      <div class="ticker-inner">
+        <span>Alam adalah guru terbaik — jangan takut untuk mendaki</span><span>Rinjani · Semeru · Papandayan · Prau</span><span>Checklist Hiking Wajib 2026</span><span>Tips Survival di Alam Terbuka</span><span>Alam adalah guru terbaik — jangan takut untuk mendaki</span><span>Rinjani · Semeru · Papandayan · Prau</span><span>Checklist Hiking Wajib 2026</span><span>Tips Survival di Alam Terbuka</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Destinasi Pilihan</h2></div></div>
+      <div class="grid-3">
+        <div class="article-card"><div class="card-img" style="height:220px"><img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Hiking</span><h3>Gunung Rinjani: Panduan Lengkap Pendakian 2026</h3><p>Trek, izin masuk, biaya, dan persiapan fisik sebelum mendaki gunung tertinggi di Lombok ini.</p><div class="meta"><span>⏱ 15 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img" style="height:220px"><img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=500&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Hiking</span><h3>Gunung Semeru: Atap Jawa yang Menantang</h3><p>Panduan mendaki Semeru dari Ranu Pane sampai puncak Mahameru 3.676 mdpl.</p><div class="meta"><span>⏱ 12 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img" style="height:220px"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Hiking</span><h3>5 Gunung Ramah Pemula di Jawa yang Wajib Dicoba</h3><p>Mulai pendakian pertama lo di gunung-gunung ini — aman, indah, dan tidak terlalu ekstrem.</p><div class="meta"><span>⏱ 8 mnt</span></div></div></div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Tips & Survival</h2></div></div>
+      <div class="grid-4">
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Hiking</span><h3>Checklist Perlengkapan Hiking Wajib 2026</h3><p>Dari tenda, sleeping bag, sampai P3K — ini yang wajib ada di carrier lo sebelum berangkat.</p><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Hiking</span><h3>Tips Camping Aman saat Musim Hujan</h3><p>Hujan bukan alasan batal camping. Ini cara bertahan dan tetap nyaman meski kondisi basah.</p><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Hiking</span><h3>Cara Baca Peta & Kompas saat Tersesat di Hutan</h3><p>Skill navigasi dasar yang wajib dikuasai setiap pendaki sebelum masuk jalur yang asing.</p><div class="meta"><span>⏱ 7 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1587502537745-84b86da1204f?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Hiking</span><h3>Cara Pack Carrier 60L dengan Benar</h3><p>Teknik packing yang bikin beban terasa ringan dan distribusi berat sempurna saat mendaki.</p><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>JELAJAHI <span>INDONESIA</span> BERSAMA ONICORE</h2><p>Panduan destinasi dan tips hiking terbaru setiap minggu langsung ke inbox lo.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Subscribe</button></div></div>
+  </div>
+
+  <!-- ══════════════ LIFESTYLE — UNGU ══════════════ -->
+  <div id="page-lifestyle" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Life</span>style</h1>
+      <p>Gaya hidup aktif, produktif, dan keren. Karena hidup bukan cuma soal bisa, tapi soal bagaimana lo menjalaninya.</p>
+    </div>
+    <div class="ticker-colored">
+      <div class="ticker-inner">
+        <span>Gaya hidup aktif bukan tren, ini pilihan</span><span>Morning Routine Atlet Pro</span><span>Digital Detox 7 Hari</span><span>Mindset Juara dalam Kehidupan Sehari-hari</span><span>Gaya hidup aktif bukan tren, ini pilihan</span><span>Morning Routine Atlet Pro</span><span>Digital Detox 7 Hari</span><span>Mindset Juara dalam Kehidupan Sehari-hari</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Artikel Utama</h2></div></div>
+      <div class="featured-horizontal">
+        <div class="featured-main">
+          <div class="card-img" style="height:280px"><img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=700&auto=format&fit=crop" alt=""></div>
+          <div class="card-body"><span class="badge">Lifestyle</span><h3 style="font-size:22px;margin-bottom:10px">Digital Detox + Olahraga: Reset Mental Terbaik dalam 7 Hari</h3><p style="font-size:14px">Cara terbaik melepas stres dan recharge energi dengan menjauh dari layar dan aktif bergerak. Program 7 hari yang bisa lo mulai besok — terbukti secara ilmiah.</p><div class="meta" style="margin-top:12px"><span>✍ Onicore Team</span><span>⏱ 6 mnt baca</span></div></div>
+        </div>
+        <div class="featured-list">
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Lifestyle</span><h4>Morning Routine Atlet Pro yang Bisa Lo Tiru</h4><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1484627147104-f5197bcd6651?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Lifestyle</span><h4>Cara Atur Jadwal Olahraga di Tengah Kesibukan Kuliah</h4><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Lifestyle</span><h4>Outfit Olahraga Keren yang Nggak Bikin Kantong Kering</h4><div class="meta"><span>⏱ 4 mnt</span></div></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Gaya Hidup Aktif</h2></div></div>
+      <div class="grid-3">
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1484627147104-f5197bcd6651?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Lifestyle</span><h3>Cara Tetap Konsisten Olahraga Meski Super Sibuk</h3><p>Strategi manajemen waktu yang dipakai atlet profesional biar olahraga nggak pernah di-skip.</p><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Lifestyle</span><h3>Membangun Mindset Atlet dalam Kehidupan Sehari-hari</h3><p>Disiplin, fokus, dan ketangguhan mental bukan cuma buat atlet — ini cara menerapkannya di hidup lo.</p><div class="meta"><span>⏱ 7 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Lifestyle</span><h3>Work From Home tapi Tetap Aktif: Panduan Lengkap</h3><p>Tips ergonomis, jadwal gerak, dan olahraga singkat di sela-sela kerja dari rumah.</p><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>HIDUP LEBIH <span>AKTIF</span> DAN KEREN</h2><p>Inspirasi gaya hidup aktif setiap minggu langsung ke inbox lo.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Subscribe</button></div></div>
+  </div>
+
+  <!-- ══════════════ TIPS — AMBER ══════════════ -->
+  <div id="page-tips" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Tips</span> & Trick</h1>
+      <p>Panduan praktis, shortcut, dan hack terbaik. Karena pengetahuan yang tepat bisa mengubah cara lo bergerak dan hidup.</p>
+    </div>
+    <div class="ticker-colored">
+      <div class="ticker-inner">
+        <span>Pengetahuan yang tepat adalah kekuatan sejati</span><span>Stamina Lari 30 Hari</span><span>Hidrasi yang Benar saat Olahraga</span><span>7 Kebiasaan Pagi Pengubah Hidup</span><span>Pengetahuan yang tepat adalah kekuatan sejati</span><span>Stamina Lari 30 Hari</span><span>Hidrasi yang Benar saat Olahraga</span><span>7 Kebiasaan Pagi Pengubah Hidup</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Tips Populer</h2></div></div>
+      <div class="tips-grid">
+        <div class="tip-card"><div class="tip-icon">🏃</div><h3>Cara Meningkatkan Stamina Lari dalam 30 Hari</h3><p>Program latihan progresif yang terbukti ampuh meningkatkan daya tahan kardio lo secara signifikan.</p><div class="meta" style="margin-top:14px"><span>⏱ 6 mnt baca</span></div></div>
+        <div class="tip-card"><div class="tip-icon">💧</div><h3>Cara Minum Air yang Benar saat Olahraga</h3><p>Hidrasi yang salah bisa bikin performa drop drastis. Pelajari kapan dan berapa banyak harus minum.</p><div class="meta" style="margin-top:14px"><span>⏱ 4 mnt baca</span></div></div>
+        <div class="tip-card"><div class="tip-icon">🎒</div><h3>Cara Pack Carrier 60L dengan Benar dan Efisien</h3><p>Teknik packing yang bikin beban terasa ringan dan barang tetap aman selama pendakian.</p><div class="meta" style="margin-top:14px"><span>⏱ 5 mnt baca</span></div></div>
+        <div class="tip-card"><div class="tip-icon">😴</div><h3>Tidur Berkualitas untuk Pemulihan Otot Optimal</h3><p>Olahraga keras tanpa tidur cukup = sia-sia. Optimalkan waktu tidur lo sebagai atlet aktif.</p><div class="meta" style="margin-top:14px"><span>⏱ 5 mnt baca</span></div></div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Semua Tips</h2></div></div>
+      <div class="grid-4">
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Tips</span><h3>7 Kebiasaan Pagi yang Ubah Hidup dalam Sebulan</h3><p>Rutinitas sederhana yang dilakukan konsisten terbukti meningkatkan energi dan produktivitas harian.</p><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Tips</span><h3>Cara Cegah Cedera saat Mulai Olahraga Baru</h3><p>5 langkah wajib sebelum memulai rutinitas olahraga baru agar tubuh tidak kaget dan cedera.</p><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Tips</span><h3>Cara Bakar Kalori Lebih Banyak tanpa Tambah Durasi</h3><p>Teknik yang bisa lo terapkan untuk memaksimalkan pembakaran kalori dalam waktu yang sama.</p><div class="meta"><span>⏱ 7 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Tips</span><h3>Cara Tetap Motivasi saat Malas Olahraga</h3><p>Teknik psikologi yang dipakai atlet pro untuk tetap bergerak bahkan di hari paling malas.</p><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>TIPS <span>EKSKLUSIF</span> TIAP MINGGU</h2><p>Hack dan tips terbaik langsung dari para ahli ke inbox lo. Gratis.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Subscribe</button></div></div>
+  </div>
+
+  <!-- ══════════════ NUTRISI — ORANYE ══════════════ -->
+  <div id="page-nutrisi" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Nutri</span>si</h1>
+      <p>Lo adalah apa yang lo makan. Panduan makan sehat, meal prep, suplemen, dan semua yang lo butuhkan untuk performa terbaik.</p>
+    </div>
+    <div class="ticker-colored">
+      <div class="ticker-inner">
+        <span>Makanan yang tepat adalah bahan bakar kemenangan lo</span><span>Meal Prep Seminggu dalam 2 Jam</span><span>Protein: Berapa yang Lo Butuhkan?</span><span>Makan Sebelum atau Sesudah Latihan?</span><span>Makanan yang tepat adalah bahan bakar kemenangan lo</span><span>Meal Prep Seminggu dalam 2 Jam</span><span>Protein: Berapa yang Lo Butuhkan?</span><span>Makan Sebelum atau Sesudah Latihan?</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Artikel Utama</h2></div></div>
+      <div class="featured-horizontal">
+        <div class="featured-main">
+          <div class="card-img" style="height:280px"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=700&auto=format&fit=crop" alt=""></div>
+          <div class="card-body"><span class="badge">Nutrisi</span><h3 style="font-size:22px;margin-bottom:10px">Meal Prep Mingguan ala Atlet: Hemat, Sehat, Praktis</h3><p style="font-size:14px">Siapkan makanan sehat satu minggu hanya dalam 2 jam. Menu tinggi protein, rendah lemak jahat, dan tetap enak untuk mendukung latihan harian lo.</p><div class="meta" style="margin-top:12px"><span>✍ Onicore Team</span><span>⏱ 8 mnt baca</span></div></div>
+        </div>
+        <div class="featured-list">
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Nutrisi</span><h4>Menu Makan Sehat Seminggu untuk Atlet Pemula</h4><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Nutrisi</span><h4>Makanan Tinggi Protein Murah yang Mudah Ditemukan</h4><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+          <div class="list-card"><div class="list-card-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Nutrisi</span><h4>Suplemen yang Berguna vs yang Cuma Marketing</h4><div class="meta"><span>⏱ 9 mnt</span></div></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Panduan Nutrisi</h2></div></div>
+      <div class="grid-3">
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Nutrisi</span><h3>Berapa Banyak Protein yang Lo Butuhkan Per Hari?</h3><p>Kalkulasi kebutuhan protein berdasarkan berat badan, tingkat aktivitas, dan tujuan kebugaran lo.</p><div class="meta"><span>⏱ 6 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Nutrisi</span><h3>Makan Sebelum atau Sesudah Olahraga? Ini Jawabannya</h3><p>Waktu makan yang tepat bisa memaksimalkan performa dan recovery. Ini panduan lengkapnya.</p><div class="meta"><span>⏱ 5 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Nutrisi</span><h3>Smoothie Terbaik untuk Recovery Pasca Latihan</h3><p>Resep minuman alami kaya antioksidan dan elektrolit untuk pemulihan otot yang lebih cepat.</p><div class="meta"><span>⏱ 4 mnt</span></div></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>MAKAN SEHAT <span>MULAI SEKARANG</span></h2><p>Resep dan panduan nutrisi terbaik langsung ke inbox lo setiap minggu.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Subscribe</button></div></div>
+  </div>
+
+  <!-- ══════════════ EVENT — BIRU ══════════════ -->
+  <div id="page-event" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Event</span> & Kompetisi</h1>
+      <p>Komunitas yang kuat lahir dari event yang seru. Info lomba, hiking bareng, turnamen, dan semua event aktif di Indonesia.</p>
+    </div>
+    <div class="ticker-colored">
+      <div class="ticker-inner">
+        <span>Bergabunglah, bergeraklah, rayakan bersama komunitas Onicore</span><span>Jakarta Run Fest · 22 Jun 2026</span><span>Onicore Community Hike · 5 Jul 2026</span><span>Bali Marathon · 10 Agustus 2026</span><span>Bergabunglah, bergeraklah, rayakan bersama komunitas Onicore</span><span>Jakarta Run Fest · 22 Jun 2026</span><span>Onicore Community Hike · 5 Jul 2026</span><span>Bali Marathon · 10 Agustus 2026</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Event Terdekat</h2></div></div>
+      <div class="grid-3">
+        <div class="event-card"><div class="event-img"><img src="https://images.unsplash.com/photo-1542621334-a254cf47733d?w=500&auto=format&fit=crop" alt=""></div><div class="event-body"><div class="event-date"><div class="date-box"><div class="day">22</div><div class="month">JUN</div></div><div><span class="badge">Lari</span><p style="font-size:12px;color:var(--gray);margin-top:4px">📍 Jakarta</p></div></div><h3>Jakarta Run Fest 2026 — 5K, 10K & 21K</h3><p>Event lari bergengsi di Jakarta yang terbuka untuk semua kalangan. Ada kategori fun run sampai half marathon.</p><div class="event-info"><span>👥 5.000 peserta</span><span>💰 Rp 150.000</span></div></div></div>
+        <div class="event-card"><div class="event-img"><img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&auto=format&fit=crop" alt=""></div><div class="event-body"><div class="event-date"><div class="date-box"><div class="day">05</div><div class="month">JUL</div></div><div><span class="badge">Hiking</span><p style="font-size:12px;color:var(--gray);margin-top:4px">📍 Bandung</p></div></div><h3>Onicore Hiking Community — Pendakian Papandayan</h3><p>Hiking bareng komunitas Onicore ke Gunung Papandayan. Open untuk semua level, termasuk pemula!</p><div class="event-info"><span>👥 50 peserta</span><span>💰 Rp 250.000</span></div></div></div>
+        <div class="event-card"><div class="event-img"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&auto=format&fit=crop" alt=""></div><div class="event-body"><div class="event-date"><div class="date-box"><div class="day">19</div><div class="month">JUL</div></div><div><span class="badge">Fitness</span><p style="font-size:12px;color:var(--gray);margin-top:4px">📍 Surabaya</p></div></div><h3>Surabaya Fitness Championship 2026</h3><p>Kompetisi kebugaran bergengsi — kategori strength, endurance, dan functional fitness.</p><div class="event-info"><span>👥 300 peserta</span><span>💰 Rp 200.000</span></div></div></div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Event Mendatang</h2></div></div>
+      <div class="grid-2">
+        <div class="list-card" style="padding:20px"><div class="list-card-img" style="width:100px;height:85px"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Lari</span><h4 style="font-size:15px">Bali Marathon 2026 — 42K Full Marathon</h4><p style="font-size:12px;color:var(--gray);margin-top:4px">📅 10 Agustus 2026 &nbsp;|&nbsp; 📍 Bali &nbsp;|&nbsp; 💰 Rp 500.000</p></div></div>
+        <div class="list-card" style="padding:20px"><div class="list-card-img" style="width:100px;height:85px"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Hiking</span><h4 style="font-size:15px">Onicore Trail Run — Puncak Adventure Race</h4><p style="font-size:12px;color:var(--gray);margin-top:4px">📅 24 Agustus 2026 &nbsp;|&nbsp; 📍 Bogor &nbsp;|&nbsp; 💰 Rp 175.000</p></div></div>
+        <div class="list-card" style="padding:20px"><div class="list-card-img" style="width:100px;height:85px"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Yoga</span><h4 style="font-size:15px">Yogathon Nasional 2026 — Satu Indonesia Bergerak</h4><p style="font-size:12px;color:var(--gray);margin-top:4px">📅 7 September 2026 &nbsp;|&nbsp; 📍 Seluruh Indonesia &nbsp;|&nbsp; Gratis</p></div></div>
+        <div class="list-card" style="padding:20px"><div class="list-card-img" style="width:100px;height:85px"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=200&auto=format&fit=crop" alt=""></div><div class="list-card-body"><span class="badge" style="font-size:9px;padding:2px 7px">Fitness</span><h4 style="font-size:15px">CrossFit Open Indonesia 2026</h4><p style="font-size:12px;color:var(--gray);margin-top:4px">📅 20 September 2026 &nbsp;|&nbsp; 📍 Jakarta &nbsp;|&nbsp; 💰 Rp 300.000</p></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>JANGAN SAMPAI <span>KETINGGALAN EVENT</span></h2><p>Notifikasi event olahraga terbaru di kota lo langsung ke inbox.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Notifikasi Saya</button></div></div>
+  </div>
+
+  <!-- ══════════════ GEAR — SILVER ══════════════ -->
+  <div id="page-gear" class="page">
+    <div class="page-banner">
+      <div class="page-label">Kategori</div>
+      <h1><span>Review</span> Gear</h1>
+      <p>Gear yang tepat = performa maksimal. Review jujur perlengkapan olahraga, hiking, dan fitness. Beli yang tepat, jangan buang uang percuma.</p>
+    </div>
+    <div class="ticker-colored" style="color:#000">
+      <div class="ticker-inner">
+        <span>Review jujur tanpa sponsor tersembunyi — hanya fakta dan pengalaman nyata</span><span>Nike Pegasus 41: 9.2/10</span><span>Garmin Forerunner 165: 8.9/10</span><span>Eiger Alvaro 60L: 8.7/10</span><span>Review jujur tanpa sponsor tersembunyi — hanya fakta dan pengalaman nyata</span><span>Nike Pegasus 41: 9.2/10</span><span>Garmin Forerunner 165: 8.9/10</span><span>Eiger Alvaro 60L: 8.7/10</span>
+      </div>
+    </div>
+    <section>
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Review Terbaru</h2></div></div>
+      <div class="grid-4">
+        <div class="gear-card"><div class="gear-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&auto=format&fit=crop" alt=""><div class="gear-rating">9.2/10</div></div><div class="gear-body"><span class="badge">Sepatu Lari</span><div class="stars">★★★★★</div><h3>Nike Pegasus 41 — Review Lengkap 2026</h3><div class="price">Rp 1.850.000</div><p>Cushioning terbaik di kelasnya, ringan, dan cocok untuk semua jenis medan. Worth it banget.</p></div></div>
+        <div class="gear-card"><div class="gear-img"><img src="https://images.unsplash.com/photo-1587502537745-84b86da1204f?w=400&auto=format&fit=crop" alt=""><div class="gear-rating">8.7/10</div></div><div class="gear-body"><span class="badge">Carrier</span><div class="stars">★★★★☆</div><h3>Eiger Alvaro 60L — Terbaik di Bawah 1 Juta</h3><div class="price">Rp 850.000</div><p>Kualitas lokal yang nggak kalah sama merek luar. Sistem ventilasi punggung nyaman dipakai seharian.</p></div></div>
+        <div class="gear-card"><div class="gear-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop" alt=""><div class="gear-rating">8.9/10</div></div><div class="gear-body"><span class="badge">Smartwatch</span><div class="stars">★★★★★</div><h3>Garmin Forerunner 165 — Teman Lari Sempurna</h3><div class="price">Rp 3.200.000</div><p>GPS akurat, monitoring jantung real-time, dan baterai tahan 11 hari. Investasi terbaik buat pelari.</p></div></div>
+        <div class="gear-card"><div class="gear-img"><img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&auto=format&fit=crop" alt=""><div class="gear-rating">8.4/10</div></div><div class="gear-body"><span class="badge">Tenda</span><div class="stars">★★★★☆</div><h3>Consina Trekker 2P — Pilihan Tepat Pemula</h3><div class="price">Rp 650.000</div><p>Mudah dipasang, tahan angin, dan waterproof yang oke. Pilihan tepat untuk pendaki pemula.</p></div></div>
+      </div>
+    </section>
+    <section class="section-dark">
+      <div class="section-header"><div class="section-title"><div class="line"></div><h2>Perbandingan Produk</h2></div></div>
+      <div class="grid-3">
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Sepatu</span><h3>Nike vs Adidas vs New Balance: Mana Terbaik untuk Lari?</h3><p>Perbandingan head-to-head tiga brand sepatu lari paling populer dari sisi kenyamanan dan durabilitas.</p><div class="meta"><span>⏱ 10 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Smartwatch</span><h3>Garmin vs Apple Watch untuk Olahraga: Review Jujur</h3><p>Dua smartwatch terbaik diadu langsung — fitur sport, akurasi GPS, dan daya tahan baterai.</p><div class="meta"><span>⏱ 12 mnt</span></div></div></div>
+        <div class="article-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop" alt=""></div><div class="card-body"><span class="badge">Gym</span><h3>5 Dumbbells Terbaik untuk Home Gym di Bawah 500 Ribu</h3><p>Rekomendasi dumbbell berkualitas yang nggak bikin kantong bolong untuk latihan di rumah.</p><div class="meta"><span>⏱ 7 mnt</span></div></div></div>
+      </div>
+    </section>
+    <div class="newsletter"><h2>REVIEW <span>JUJUR</span> SETIAP MINGGU</h2><p>Dapat rekomendasi gear terbaik sebelum lo buang uang untuk produk yang salah.</p><div class="newsletter-form"><input type="email" placeholder="Email lo..."><button>Subscribe</button></div></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo" onclick="showPage('home')">ONICORE</div>
+        <p>Media informasi gaya hidup aktif untuk anak muda Indonesia. Olahraga, kesehatan, hiking, dan lifestyle — semua ada di sini.</p>
+        <div class="socials">
+          <div class="social-btn">ig</div>
+          <div class="social-btn">yt</div>
+          <div class="social-btn">tk</div>
+          <div class="social-btn">tw</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Kategori</h4>
+        <ul>
+          <li><a onclick="showPage('olahraga')">Olahraga</a></li>
+          <li><a onclick="showPage('kesehatan')">Kesehatan</a></li>
+          <li><a onclick="showPage('hiking')">Hiking</a></li>
+          <li><a onclick="showPage('lifestyle')">Lifestyle</a></li>
+          <li><a onclick="showPage('tips')">Tips & Trick</a></li>
+          <li><a onclick="showPage('nutrisi')">Nutrisi</a></li>
+          <li><a onclick="showPage('event')">Event</a></li>
+          <li><a onclick="showPage('gear')">Review Gear</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Tentang</h4>
+        <ul>
+          <li><a href="#">Tentang Onicore</a></li>
+          <li><a href="#">Tim Redaksi</a></li>
+          <li><a href="#">Karir</a></li>
+          <li><a href="#">Advertise</a></li>
+          <li><a href="#">Kontak</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Kebijakan Privasi</a></li>
+          <li><a href="#">Syarat & Ketentuan</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 <span>Onicore</span>. All rights reserved.</p>
+      <p>Made with <span>♥</span> in Indonesia</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeMap = {
+      home:'theme-home', olahraga:'theme-olahraga', kesehatan:'theme-kesehatan',
+      hiking:'theme-hiking', lifestyle:'theme-lifestyle', tips:'theme-tips',
+      nutrisi:'theme-nutrisi', event:'theme-event', gear:'theme-gear',
+      search:'theme-home', article:'theme-home'
+    };
+    const catIndex = { home:0, olahraga:1, kesehatan:2, hiking:3, lifestyle:4, tips:5, nutrisi:6, event:7, gear:8 };
+    const catThemeMap = { 'Olahraga':'olahraga','Kesehatan':'kesehatan','Hiking':'hiking','Lifestyle':'lifestyle','Tips & Trick':'tips','Nutrisi':'nutrisi','Event':'event','Review Gear':'gear' };
+
+    function generateBody(a) {
+      const tips = {
+        'Olahraga': ['Mulai dengan intensitas rendah lalu tingkatkan secara bertahap','Lakukan pemanasan minimal 10 menit sebelum latihan','Istirahat cukup antara sesi latihan agar otot bisa recover','Pantau detak jantung untuk memastikan intensitas latihan tepat','Konsistensi lebih penting dari intensitas di awal'],
+        'Kesehatan': ['Tidur 7-8 jam setiap malam untuk recovery optimal','Minum minimal 2 liter air per hari, lebih jika aktif berolahraga','Konsumsi makanan bergizi seimbang dari berbagai kelompok pangan','Kelola stres dengan meditasi, yoga, atau aktivitas yang lo suka','Lakukan pemeriksaan kesehatan rutin minimal setahun sekali'],
+        'Hiking': ['Mulai latihan fisik setidaknya 4 minggu sebelum pendakian','Cek prakiraan cuaca sebelum berangkat dan siapkan rencana cadangan','Bawa selalu perlengkapan P3K dan tahu cara menggunakannya','Beritahu orang terdekat tentang rencana pendakian dan perkiraan waktu kembali','Prinsip leave no trace: bawa pulang semua sampahmu'],
+        'Lifestyle': ['Bangun rutinitas pagi yang konsisten meski hanya 15 menit','Batasi screen time terutama 1 jam sebelum tidur','Prioritaskan waktu untuk aktivitas yang memberi energi positif','Bangun jaringan komunitas yang suportif dan sevisi','Evaluasi dan sesuaikan rutinitas setiap bulan'],
+        'Tips & Trick': ['Catat progress harian untuk memotivasi diri sendiri','Temukan accountability partner yang memiliki tujuan serupa','Mulai kecil dan bangun kebiasaan secara bertahap','Rayakan setiap pencapaian kecil dalam perjalananmu','Jangan bandingkan progress lo dengan orang lain'],
+        'Nutrisi': ['Makan dalam porsi kecil tapi sering untuk menjaga energi stabil','Penuhi kebutuhan protein dari sumber yang bervariasi','Jangan skip sarapan — ini bahan bakar utama aktivitas pagi','Batasi gula tambahan dan makanan ultra-proses','Siapkan meal prep mingguan untuk kemudahan dan konsistensi'],
+        'Event': ['Daftar jauh-jauh hari untuk mendapat harga early bird','Latihan spesifik sesuai jenis event yang akan diikuti','Cek aturan dan persyaratan event secara detail','Siapkan perlengkapan H-3 agar tidak terburu-buru','Datang lebih awal di hari H untuk warming up dan orientasi'],
+        'Review Gear': ['Tentukan budget dan prioritas fitur sebelum membeli','Baca minimal 10 ulasan dari pengguna nyata','Kalau bisa, coba langsung di toko sebelum membeli','Perhatikan garansi dan layanan purna jual','Beli sesuai kebutuhan aktual, bukan hype semata'],
+      };
+      const t = tips[a.cat] || tips['Olahraga'];
+      return `
+        <p>${a.desc} Dalam artikel ini, Onicore akan mengupas tuntas semua yang perlu lo ketahui — mulai dari dasar hingga tips tingkat lanjut yang bisa langsung dipraktikkan.</p>
+        <h2>Kenapa Ini Penting?</h2>
+        <p>Di era modern seperti sekarang, informasi yang tepat bisa jadi pembeda antara hasil yang biasa dan luar biasa. Banyak orang yang sudah bersemangat memulai tapi akhirnya berhenti karena kurang panduan yang benar. Artikel ini hadir untuk memastikan lo punya fondasi yang kuat sebelum melangkah lebih jauh.</p>
+        <h2>Panduan Lengkap</h2>
+        <p>Perjalanan seribu langkah dimulai dari satu langkah pertama yang benar. Kunci sukses dalam hal ini bukan seberapa keras lo berusaha di awal, melainkan seberapa konsisten lo bisa membangun kebiasaan positif secara bertahap. Data menunjukkan bahwa orang yang memulai dengan pendekatan progresif memiliki tingkat keberhasilan jauh lebih tinggi dibanding yang langsung all-out dari hari pertama.</p>
+        <div class="art-tips-box">
+          <h4>⚡ Poin Kunci yang Harus Lo Ingat</h4>
+          <ul>${t.map(tip=>`<li>${tip}</li>`).join('')}</ul>
+        </div>
+        <h2>Langkah Selanjutnya</h2>
+        <p>Setelah memahami dasar-dasarnya, saatnya lo mulai implementasi. Jangan tunggu kondisi sempurna karena kondisi itu tidak pernah benar-benar ada. Mulai dari apa yang lo punya sekarang, dengan kondisi lo sekarang, di tempat lo sekarang. Komunitas Onicore siap menemani perjalanan lo setiap langkahnya.</p>`;
+    }
+
+    function openArticle(idx) {
+      const a = articles[idx];
+      if (!a) return;
+      window._prevPage = document.querySelector('.page.active')?.id?.replace('page-','') || 'home';
+      document.getElementById('art-hero-img').src = a.img.replace('w=400','w=900');
+      document.getElementById('art-badge').textContent = a.cat;
+      document.getElementById('art-title').textContent = a.title;
+      document.getElementById('art-breadcrumb').textContent = 'Beranda › ' + a.cat;
+      document.getElementById('art-time').textContent = '⏱ ' + a.time + ' baca';
+      document.getElementById('art-body').innerHTML = generateBody(a);
+      // Related articles
+      const related = articles.filter((r,i) => r.cat === a.cat && i !== idx).slice(0,3);
+      document.getElementById('art-related').innerHTML = related.length ? related.map(r => {
+        const ri = articles.indexOf(r);
+        return `<div class="article-card" onclick="openArticle(${ri})"><div class="card-img"><img src="${r.img}" alt=""></div><div class="card-body"><span class="badge">${r.cat}</span><h3>${r.title}</h3><p>${r.desc}</p><div class="meta"><span>⏱ ${r.time} baca</span></div></div></div>`;
+      }).join('') : '<p style="color:var(--gray)">Tidak ada artikel terkait.</p>';
+      // Set theme
+      const t = catThemeMap[a.cat] || 'home';
+      Object.values(themeMap).forEach(th => document.body.classList.remove(th));
+      document.body.classList.add(themeMap[t] || 'theme-home');
+      document.getElementById('main-nav').classList.add('themed');
+      // Show page
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-article').classList.add('active');
+      document.querySelectorAll('.nav-cat').forEach(c => c.classList.remove('active'));
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+
+    // Database artikel
+    const articles = [
+      { title:'Panduan Lengkap Lari 5K untuk Pemula di 2026', cat:'Olahraga', page:'olahraga', desc:'Mulai dari nol sampai bisa finish 5K dalam 8 minggu dengan program latihan yang tepat.', img:'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400&auto=format&fit=crop', time:'7 mnt' },
+      { title:'5 Latihan HIIT 20 Menit yang Bakar Lemak Lebih Cepat', cat:'Olahraga', page:'olahraga', desc:'Studi membuktikan HIIT lebih efektif membakar kalori dibanding kardio biasa. Ini programnya.', img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&auto=format&fit=crop', time:'5 mnt' },
+      { title:'Program Latihan Full Body 3x Seminggu', cat:'Olahraga', page:'olahraga', desc:'Latihan efisien yang menargetkan semua otot utama hanya dalam 3 sesi per minggu.', img:'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&auto=format&fit=crop', time:'9 mnt' },
+      { title:'Olahraga di Rumah Tanpa Alat: 30 Menit Cukup', cat:'Olahraga', page:'olahraga', desc:'Latihan bodyweight yang bisa bikin tubuh lo kencang tanpa butuh gym mahal.', img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'Push-Up 100 Hari: Transformasi Tubuh yang Nyata', cat:'Olahraga', page:'olahraga', desc:'Tantangan push-up 100 hari yang terbukti mengubah postur dan kekuatan tubuh secara signifikan.', img:'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'Yoga Pagi 15 Menit: Mulai Hari dengan Energi Penuh', cat:'Kesehatan', page:'kesehatan', desc:'Gerakan yoga simpel sebelum sarapan untuk tubuh lebih segar dan fokus sepanjang hari.', img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&auto=format&fit=crop', time:'4 mnt' },
+      { title:'Tanda-tanda Tubuh Lo Butuh Istirahat dari Latihan', cat:'Kesehatan', page:'kesehatan', desc:'Overtraining itu nyata. Kenali sinyal dari tubuh sebelum cedera serius datang menghampiri.', img:'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&auto=format&fit=crop', time:'5 mnt' },
+      { title:'Bahaya Kurang Tidur bagi Performa Olahraga', cat:'Kesehatan', page:'kesehatan', desc:'Kurang tidur merusak hormon pertumbuhan, imunitas, dan kemampuan recovery otot lo.', img:'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'Cara Menjaga Imunitas Tubuh di Musim Hujan', cat:'Kesehatan', page:'kesehatan', desc:'Tips praktis menjaga daya tahan tubuh saat cuaca tidak menentu dan musim penyakit tiba.', img:'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=400&auto=format&fit=crop', time:'5 mnt' },
+      { title:'10 Jalur Pendakian Terbaik di Indonesia', cat:'Hiking', page:'hiking', desc:'Dari Rinjani sampai Carstensz, panduan lengkap jalur terbaik di Indonesia untuk semua level.', img:'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&auto=format&fit=crop', time:'12 mnt' },
+      { title:'Gunung Semeru: Panduan Mendaki Atap Jawa', cat:'Hiking', page:'hiking', desc:'Semua yang perlu lo tau sebelum mendaki Semeru — izin, jalur, cuaca, dan tips bertahan.', img:'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=400&auto=format&fit=crop', time:'12 mnt' },
+      { title:'Checklist Perlengkapan Hiking Wajib 2026', cat:'Hiking', page:'hiking', desc:'Dari tenda, sleeping bag, sampai P3K — ini yang wajib ada di carrier lo sebelum berangkat.', img:'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'Tips Camping Aman saat Musim Hujan', cat:'Hiking', page:'hiking', desc:'Hujan bukan alasan batal camping. Ini cara bertahan dan tetap nyaman meski kondisi basah.', img:'https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=400&auto=format&fit=crop', time:'5 mnt' },
+      { title:'Cara Baca Peta & Kompas saat Tersesat di Hutan', cat:'Hiking', page:'hiking', desc:'Skill navigasi dasar yang wajib dikuasai setiap pendaki sebelum masuk jalur yang asing.', img:'https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=400&auto=format&fit=crop', time:'7 mnt' },
+      { title:'Digital Detox + Olahraga: Reset Mental Terbaik', cat:'Lifestyle', page:'lifestyle', desc:'Program 7 hari jauh dari layar yang terbukti meningkatkan kebahagiaan dan fokus mental.', img:'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'Morning Routine Atlet Pro yang Bisa Lo Tiru', cat:'Lifestyle', page:'lifestyle', desc:'Kebiasaan pagi kelas dunia yang bisa langsung dipraktikkan untuk performa maksimal.', img:'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=400&auto=format&fit=crop', time:'5 mnt' },
+      { title:'Membangun Mindset Atlet dalam Kehidupan Sehari-hari', cat:'Lifestyle', page:'lifestyle', desc:'Disiplin, fokus, dan ketangguhan mental bukan cuma buat atlet — ini cara menerapkannya.', img:'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&auto=format&fit=crop', time:'7 mnt' },
+      { title:'Cara Meningkatkan Stamina Lari dalam 30 Hari', cat:'Tips & Trick', page:'tips', desc:'Program latihan progresif yang terbukti ampuh meningkatkan daya tahan kardio lo secara signifikan.', img:'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'7 Kebiasaan Pagi yang Ubah Hidup dalam Sebulan', cat:'Tips & Trick', page:'tips', desc:'Rutinitas sederhana yang dilakukan konsisten terbukti meningkatkan energi dan produktivitas.', img:'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&auto=format&fit=crop', time:'5 mnt' },
+      { title:'Cara Cegah Cedera saat Mulai Olahraga Baru', cat:'Tips & Trick', page:'tips', desc:'5 langkah wajib sebelum memulai rutinitas olahraga baru agar tubuh tidak kaget dan cedera.', img:'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'Meal Prep Mingguan ala Atlet: Hemat, Sehat, Praktis', cat:'Nutrisi', page:'nutrisi', desc:'Siapkan makanan sehat seminggu dalam 2 jam. Menu tinggi protein dan tetap enak.', img:'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&auto=format&fit=crop', time:'8 mnt' },
+      { title:'Berapa Banyak Protein yang Lo Butuhkan Per Hari?', cat:'Nutrisi', page:'nutrisi', desc:'Kalkulasi kebutuhan protein berdasarkan berat badan, tingkat aktivitas, dan tujuan kebugaran.', img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop', time:'6 mnt' },
+      { title:'Makan Sebelum atau Sesudah Olahraga? Ini Jawabannya', cat:'Nutrisi', page:'nutrisi', desc:'Waktu makan yang tepat bisa memaksimalkan performa dan mempercepat recovery otot lo.', img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&auto=format&fit=crop', time:'5 mnt' },
+      { title:'Jakarta Run Fest 2026 — 5K, 10K & 21K', cat:'Event', page:'event', desc:'Event lari bergengsi di Jakarta terbuka untuk semua kalangan. 22 Juni 2026. Rp 150.000.', img:'https://images.unsplash.com/photo-1542621334-a254cf47733d?w=400&auto=format&fit=crop', time:'2 mnt' },
+      { title:'Onicore Hiking Community — Pendakian Papandayan', cat:'Event', page:'event', desc:'Hiking bareng komunitas Onicore ke Gunung Papandayan. 5 Juli 2026. Rp 250.000.', img:'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&auto=format&fit=crop', time:'2 mnt' },
+      { title:'Nike Pegasus 41 — Review Lengkap 2026', cat:'Review Gear', page:'gear', desc:'Rating 9.2/10. Cushioning terbaik di kelasnya, ringan, dan cocok untuk semua jenis medan.', img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&auto=format&fit=crop', time:'8 mnt' },
+      { title:'Garmin Forerunner 165 — Teman Lari Sempurna', cat:'Review Gear', page:'gear', desc:'Rating 8.9/10. GPS akurat, monitoring jantung real-time, baterai 11 hari. Rp 3.200.000.', img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop', time:'10 mnt' },
+      { title:'Eiger Alvaro 60L — Terbaik di Bawah 1 Juta', cat:'Review Gear', page:'gear', desc:'Rating 8.7/10. Kualitas lokal yang nggak kalah sama merek luar. Sistem ventilasi punggung nyaman.', img:'https://images.unsplash.com/photo-1587502537745-84b86da1204f?w=400&auto=format&fit=crop', time:'7 mnt' },
+    ];
+
+    function doSearch() {
+      const q = document.getElementById('search-input').value.trim();
+      if (!q) return;
+
+      const results = articles.filter(a =>
+        a.title.toLowerCase().includes(q.toLowerCase()) ||
+        a.cat.toLowerCase().includes(q.toLowerCase()) ||
+        a.desc.toLowerCase().includes(q.toLowerCase())
+      );
+
+      document.getElementById('search-title-query').textContent = '"' + q + '"';
+      document.getElementById('search-subtitle').textContent =
+        results.length > 0
+          ? results.length + ' artikel ditemukan'
+          : 'Tidak ada artikel yang cocok dengan pencarian lo.';
+
+      const container = document.getElementById('search-results-container');
+      if (results.length === 0) {
+        container.innerHTML = `
+          <div class="search-empty">
+            <div class="search-icon">🔍</div>
+            <h3>Artikel tidak ditemukan</h3>
+            <p>Coba kata kunci lain seperti "lari", "hiking", "nutrisi", atau "gear".</p>
+          </div>`;
+      } else {
+        const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+        container.innerHTML = '<div class="search-results-grid">' +
+          results.map(a => `
+            <div class="article-card" onclick="showPage('${a.page}')">
+              <div class="card-img"><img src="${a.img}" alt=""></div>
+              <div class="card-body">
+                <span class="badge">${a.cat}</span>
+                <h3>${a.title.replace(re, '<span class="search-highlight">$1</span>')}</h3>
+                <p>${a.desc}</p>
+                <div class="meta"><span>⏱ ${a.time} baca</span></div>
+              </div>
+            </div>`).join('') +
+          '</div>';
+      }
+
+      showPage('search');
+    }
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+
+      document.querySelectorAll('.nav-cat').forEach(c => c.classList.remove('active'));
+      if (catIndex[id] !== undefined) document.querySelectorAll('.nav-cat')[catIndex[id]].classList.add('active');
+
+      Object.values(themeMap).forEach(t => document.body.classList.remove(t));
+      document.body.classList.add(themeMap[id] || 'theme-home');
+
+      document.getElementById('main-nav').classList.toggle('themed', id !== 'home' && id !== 'search');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
