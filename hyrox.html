@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Primary -->
+  <title>ONICORE : Mengenal Hyrox Lebih Dekat & Kenapa Banyak Diminati</title>
+  <meta name="description" content="Hyrox kini banyak diminati di Indonesia. Pelajari apa itu Hyrox, 8 station yang harus ditaklukkan, dan kenapa olahraga ini bikin banyak orang ketagihan.">
+  <meta name="keywords" content="hyrox indonesia, hyrox itu apa, kompetisi hyrox, hyrox jakarta, olahraga fungsional, hyrox pemula">
+  <meta name="author" content="Onicore Team">
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://onicore.vercel.app/hyrox.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ONICORE : Mengenal Hyrox Lebih Dekat & Kenapa Banyak Diminati">
+  <meta property="og:description" content="Hyrox kini banyak diminati di Indonesia. Pelajari apa itu Hyrox, 8 station yang harus ditaklukkan, dan kenapa olahraga ini bikin banyak orang ketagihan.">
+  <meta property="og:image" content="https://i.ibb.co/GYsq0ML/Jakarta-it-s-your-time-Keep-training-to-cross-the-finish-line-June-27-28-Nusantara-Inte-1.webp">
+  <meta property="og:url" content="https://onicore.vercel.app/hyrox.html">
+  <meta property="og:site_name" content="Onicore">
+  <meta property="article:published_time" content="2026-05-17">
+  <meta property="article:author" content="Onicore Team">
+  <meta property="article:section" content="Event">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ONICORE : Mengenal Hyrox Lebih Dekat & Kenapa Banyak Diminati">
+  <meta name="twitter:description" content="Hyrox kini banyak diminati di Indonesia. Pelajari apa itu Hyrox dan kenapa olahraga ini bikin ketagihan.">
+  <meta name="twitter:image" content="https://i.ibb.co/GYsq0ML/Jakarta-it-s-your-time-Keep-training-to-cross-the-finish-line-June-27-28-Nusantara-Inte-1.webp">
+
+  <!-- Schema.org Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": "ONICORE : Mengenal Hyrox Lebih Dekat & Kenapa Banyak Diminati",
+    "description": "Hyrox kini banyak diminati di Indonesia. Pelajari apa itu Hyrox, 8 station yang harus ditaklukkan, dan kenapa olahraga ini bikin banyak orang ketagihan.",
+    "image": "https://i.ibb.co/GYsq0ML/Jakarta-it-s-your-time-Keep-training-to-cross-the-finish-line-June-27-28-Nusantara-Inte-1.webp",
+    "datePublished": "2026-05-17",
+    "author": { "@type": "Organization", "name": "Onicore Team" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Onicore",
+      "url": "https://onicore.vercel.app"
+    },
+    "url": "https://onicore.vercel.app/hyrox.html"
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111;
+      --gray: #888;
+      --light: #f5f5f0;
+      --accent: #e74c3c;
+      --white: #fff;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: #000;
+      border-bottom: 1px solid #1a1a1a;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+    .topbar-logo span { color: var(--accent); }
+    .topbar-back {
+      font-size: 13px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+    .topbar-back:hover { color: var(--white); }
+    .topbar-nav { display: flex; align-items: center; gap: 24px; }
+    .topbar-tag {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 90vh;
+      min-height: 520px;
+      overflow: hidden;
+    }
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.3) 40%,
+        rgba(0,0,0,0.85) 100%
+      );
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 48px 5% 52px;
+      max-width: 860px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 3px;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 58px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: #aaa;
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ── ARTICLE WRAPPER ── */
+    .article-wrap {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* Lead paragraph */
+    .lead {
+      font-size: 20px;
+      font-weight: 300;
+      color: #ccc;
+      line-height: 1.8;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+      margin-bottom: 40px;
+    }
+
+    /* Body text */
+    .body-text p {
+      font-size: 16px;
+      color: #bbb;
+      line-height: 1.85;
+      margin-bottom: 24px;
+    }
+    .body-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--white);
+      margin: 44px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #222;
+    }
+    .body-text h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--white);
+      margin: 28px 0 10px;
+    }
+
+    /* Station list */
+    .station-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0 32px;
+    }
+    .station-item {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .station-num {
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .station-info strong {
+      display: block;
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .station-info span { font-size: 12px; color: #666; }
+
+    /* Pull quote */
+    .pullquote {
+      background: #111;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 24px 28px;
+      margin: 36px 0;
+    }
+    .pullquote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: #ddd;
+      line-height: 1.6;
+      margin: 0 !important;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      background: linear-gradient(135deg, #1a0a0a, #1a1a1a);
+      border: 1px solid #2a1a1a;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 36px 0;
+    }
+    .highlight-box h3 {
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px !important;
+      margin-top: 0 !important;
+    }
+    .highlight-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .highlight-box ul li {
+      font-size: 14px;
+      color: #bbb;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .highlight-box ul li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid #1e1e1e;
+      margin: 40px 0;
+    }
+
+    /* CTA Box */
+    .cta-box {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 14px;
+      padding: 36px;
+      text-align: center;
+      margin: 48px 0 0;
+    }
+    .cta-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .cta-box p {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 24px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 32px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+      transition: background .2s, transform .1s;
+    }
+    .cta-btn:hover { background: #c0392b; transform: translateY(-1px); }
+
+    /* Backlink / Source */
+    .backlink-bar {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #1e1e1e;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .backlink-bar .source {
+      font-size: 12px;
+      color: #555;
+    }
+    .backlink-bar a {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity .2s;
+    }
+    .backlink-bar a:hover { opacity: .8; }
+
+    /* Footer */
+    .footer {
+      background: #000;
+      border-top: 1px solid #1a1a1a;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .footer p {
+      font-size: 12px;
+      color: #444;
+    }
+    .footer a { color: var(--accent); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .station-grid { grid-template-columns: 1fr; }
+      .hero-content { padding: 32px 20px 40px; }
+      .article-wrap { padding: 36px 20px 60px; }
+      .topbar-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="https://onicore.vercel.app" class="topbar-logo">ONI<span>CORE</span></a>
+  <div class="topbar-nav">
+    <span class="topbar-tag">Event & Kompetisi</span>
+    <a href="https://onicore.vercel.app" class="topbar-back">← Kembali ke Onicore</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <img
+    class="hero-img"
+    src="https://i.ibb.co/GYsq0ML/Jakarta-it-s-your-time-Keep-training-to-cross-the-finish-line-June-27-28-Nusantara-Inte-1.webp"
+    alt="Hyrox Jakarta 2026 - Kompetisi Kebugaran Terbesar"
+    loading="eager"
+  >
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge">Event · Hyrox</span>
+    <h1 class="hero-title">ONICORE : Mengenal Hyrox Lebih Dekat &amp; Kenapa Banyak Diminati</h1>
+    <div class="hero-meta">
+      <span>✍ Onicore Team</span>
+      <span>📅 17 Mei 2026</span>
+      <span>⏱ 5 menit baca</span>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE -->
+<article class="article-wrap">
+
+  <!-- Lead -->
+  <p class="lead">
+    Belakangan ini, nama <strong>Hyrox</strong> makin sering muncul di feed olahraga kita.
+    Dari gym lokal sampai komunitas lari, semua orang lagi ngomongin soal kompetisi
+    yang satu ini. Tapi sebenernya, apa sih Hyrox itu?
+  </p>
+
+  <div class="body-text">
+
+    <h2>Apa Itu Hyrox?</h2>
+    <p>
+      Hyrox adalah format kompetisi kebugaran yang menggabungkan <strong>lari sejauh 8 kilometer</strong>
+      dengan <strong>8 station latihan fungsional</strong> — semua dilakukan secara berurutan tanpa jeda berarti,
+      sampai lo melewati garis finish.
+    </p>
+    <p>
+      Beda dari maraton yang murni soal kecepatan lari, atau CrossFit yang lebih ke angkat beban berat —
+      Hyrox dirancang buat <strong>semua level</strong>. Pemula, atlet, bahkan yang baru mulai
+      olahraga serius pun bisa ikut dan punya kesempatan finish.
+    </p>
+
+    <div class="pullquote">
+      <p>"Hyrox bukan soal siapa yang paling kuat. Ini soal siapa yang paling konsisten."</p>
+    </div>
+
+    <h2>8 Station yang Harus Lo Taklukkan</h2>
+    <p>
+      Setiap peserta Hyrox harus menyelesaikan 8 putaran lari 1 km, diselingi masing-masing
+      1 station latihan fungsional. Ini 8 station-nya:
+    </p>
+
+    <div class="station-grid">
+      <div class="station-item">
+        <div class="station-num">1</div>
+        <div class="station-info">
+          <strong>SkiErg</strong>
+          <span>1.000 meter kayak gerakan ski</span>
+        </div>
+      </div>
+      <div class="station-item">
+        <div class="station-num">2</div>
+        <div class="station-info">
+          <strong>Sled Push</strong>
+          <span>50 meter dorong beban</span>
+        </div>
+      </div>
+      <div class="station-item">
+        <div class="station-num">3</div>
+        <div class="station-info">
+          <strong>Sled Pull</strong>
+          <span>50 meter tarik beban</span>
+        </div>
+      </div>
+      <div class="station-item">
+        <div class="station-num">4</div>
+        <div class="station-info">
+          <strong>Burpee Broad Jump</strong>
+          <span>80 meter lompat + burpee</span>
+        </div>
+      </div>
+      <div class="station-item">
+        <div class="station-num">5</div>
+        <div class="station-info">
+          <strong>Rowing</strong>
+          <span>1.000 meter di rowing machine</span>
+        </div>
+      </div>
+      <div class="station-item">
+        <div class="station-num">6</div>
+        <div class="station-info">
+          <strong>Farmers Carry</strong>
+          <span>200 meter bawa beban di tiap tangan</span>
+        </div>
+      </div>
+      <div class="station-item">
+        <div class="station-num">7</div>
+        <div class="station-info">
+          <strong>Sandbag Lunges</strong>
+          <span>100 meter lunges bawa sandbag</span>
+        </div>
+      </div>
+      <div class="station-item">
+        <div class="station-num">8</div>
+        <div class="station-info">
+          <strong>Wall Balls</strong>
+          <span>100 repetisi lempar bola ke dinding</span>
+        </div>
+      </div>
+    </div>
+
+    <h2>Kenapa Hyrox Banyak Diminati?</h2>
+    <p>
+      Kompetisi ini lahir di Jerman tahun 2017 dan dalam waktu singkat sudah digelar di
+      lebih dari 50 kota di seluruh dunia — termasuk kini mulai merambah Indonesia.
+      Tapi apa yang bikin orang begitu ketagihan?
+    </p>
+
+    <div class="highlight-box">
+      <h3>Alasan Hyrox Makin Populer</h3>
+      <ul>
+        <li>Format yang terukur — semua peserta lakukan hal yang sama, bisa bandingkan progres</li>
+        <li>Inklusif — ada kategori untuk semua level, dari pemula sampai pro</li>
+        <li>Kombinasi unik antara cardio dan strength dalam satu kompetisi</li>
+        <li>Komunitas yang solid dan suportif — atmosfer kompetisi yang menyenangkan</li>
+        <li>Kepuasan nyata saat crossing the finish line yang sulit dilupakan</li>
+      </ul>
+    </div>
+
+    <h2>Hyrox di Indonesia</h2>
+    <p>
+      Komunitas Hyrox Indonesia tumbuh pesat. Banyak gym di Jakarta, Surabaya, dan Bali
+      kini sudah mulai mempersiapkan anggotanya untuk format kompetisi ini.
+      Event resmi Hyrox Jakarta pun sudah mulai diagendakan — dan antusiasme
+      pendaftarnya luar biasa.
+    </p>
+    <p>
+      Kalau lo lagi nyari olahraga baru yang lebih dari sekadar gym biasa,
+      yang punya tujuan jelas dan komunitas yang supportif —
+      <strong>Hyrox worth it banget buat dicoba.</strong>
+    </p>
+
+    <h2>Tips Memulai Hyrox untuk Pemula</h2>
+    <div class="highlight-box">
+      <h3>Sebelum Daftar Kompetisi</h3>
+      <ul>
+        <li>Bangun base lari dulu — minimal bisa lari 5–8 km tanpa berhenti</li>
+        <li>Latihan fungsional rutin: rowing, sled, wall balls minimal 2x seminggu</li>
+        <li>Coba simulasi race pace — jangan hanya fokus kecepatan, tapi konsistensi</li>
+        <li>Gabung komunitas Hyrox lokal di kota lo untuk info event terdekat</li>
+        <li>Jangan target waktu dulu di kompetisi pertama — fokus finish dulu</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>Baca Lebih Banyak di Onicore</h3>
+    <p>Artikel olahraga, kesehatan, hiking, dan lifestyle terbaru setiap hari.</p>
+    <a href="https://onicore.vercel.app" class="cta-btn">Kunjungi Onicore →</a>
+  </div>
+
+  <!-- Backlink bar -->
+  <div class="backlink-bar">
+    <span class="source">Diterbitkan oleh <strong>Onicore</strong> · Media Gaya Hidup Aktif Indonesia</span>
+    <a href="https://onicore.vercel.app">
+      onicore.vercel.app ↗
+    </a>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">ONICORE</div>
+  <p>Media Gaya Hidup Aktif Indonesia &nbsp;·&nbsp; <a href="https://onicore.vercel.app">onicore.vercel.app</a></p>
+</footer>
+
+</body>
+</html>
